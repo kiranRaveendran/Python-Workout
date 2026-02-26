@@ -33,7 +33,7 @@
     };
   </script>
   <style>
-    body { background: #0a0a12; color: #e8e8f0; font-family: 'Outfit', sans-serif; }
+    body { background: #0a0a12; color: #e8e8f0; font-family: 'Outfit', sans-serif; overflow-x: hidden; overflow-x: clip; }
     .site-header { position: sticky; top: 0; z-index: 100; background: #0a0a12; border-bottom: 1px solid #2a2a45; }
     .subtitle { color: #6b6b88; }
     .hero h1 .hl { color: #5b5bf5; }
@@ -42,7 +42,7 @@
       background-image: linear-gradient(rgba(91,91,245,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(91,91,245,0.04) 1px, transparent 1px);
       background-size: 40px 40px; pointer-events: none; z-index: 0;
     }
-    .ch-section { display: none; }
+    .ch-section { display: none; overflow: visible; }
     .ch-section.active { display: block; }
     .ch-tab.active { background: #5b5bf5; border-color: #5b5bf5; color: #fff; }
     .filter-btn.active { background: #5b5bf5; border-color: #5b5bf5; color: #fff; }
@@ -55,6 +55,9 @@
     .ch2-fb [data-topic="if"].active { background: #f55b5b; border-color: #f55b5b; }
     .ch2-fb [data-topic="loops"].active { background: #2dd4bf; border-color: #2dd4bf; color: #0a0a12; }
     .ch2-fb [data-topic="control"].active { background: #22d3a5; border-color: #22d3a5; color: #0a0a12; }
+    .ch2-fb [data-topic="numbers"].active { background: #c084fc; border-color: #c084fc; color: #fff; }
+    .ch2-fb [data-topic="strings"].active { background: #0ea5e9; border-color: #0ea5e9; color: #fff; }
+    .ch2-fb [data-topic="pattern"].active { background: #f5a623; border-color: #f5a623; color: #0a0a12; }
     .ch3-fb [data-topic="definition"].active { background: #5b5bf5; border-color: #5b5bf5; color: #fff; }
     .ch3-fb [data-topic="parameters"].active { background: #f5a623; border-color: #f5a623; color: #0a0a12; }
     .ch3-fb [data-topic="scope"].active { background: #2dd4bf; border-color: #2dd4bf; color: #0a0a12; }
@@ -72,13 +75,16 @@
     .code-block .num { color: #f78c6c; }
     .code-block .cmt { color: #546e7a; font-style: italic; }
     .code-block .blank { background: rgba(91,91,245,0.2); border: 1px dashed rgba(91,91,245,0.5); border-radius: 4px; padding: 0 8px; color: #5b5bf5; }
-    .tag-variables, .tag-scope, .tag-operators, .tag-types, .tag-builtins, .tag-if, .tag-loops, .tag-control,
+    .tag-variables, .tag-scope, .tag-operators, .tag-types, .tag-builtins, .tag-pattern, .tag-numbers, .tag-strings, .tag-if, .tag-loops, .tag-control,
     .tag-definition, .tag-parameters, .tag-lambdas, .tag-closures { font-size: 0.65rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid; }
     .tag-variables { background: rgba(91,91,245,0.18); color: #8b8bf8; border-color: rgba(91,91,245,0.3); }
     .tag-scope { background: rgba(245,166,35,0.15); color: #f5a623; border-color: rgba(245,166,35,0.3); }
     .tag-operators { background: rgba(245,91,91,0.15); color: #f58b8b; border-color: rgba(245,91,91,0.3); }
     .tag-types { background: rgba(45,212,191,0.15); color: #2dd4bf; border-color: rgba(45,212,191,0.3); }
     .tag-builtins { background: rgba(34,211,165,0.15); color: #22d3a5; border-color: rgba(34,211,165,0.3); }
+    .tag-pattern { background: rgba(245,166,35,0.15); color: #f5a623; border-color: rgba(245,166,35,0.3); }
+    .tag-numbers { background: rgba(192,132,252,0.15); color: #c084fc; border-color: rgba(192,132,252,0.3); }
+    .tag-strings { background: rgba(14,165,233,0.15); color: #0ea5e9; border-color: rgba(14,165,233,0.3); }
     .tag-if { background: rgba(245,91,91,0.15); color: #f58b8b; border-color: rgba(245,91,91,0.3); }
     .tag-loops { background: rgba(45,212,191,0.15); color: #2dd4bf; border-color: rgba(45,212,191,0.3); }
     .tag-control { background: rgba(34,211,165,0.15); color: #22d3a5; border-color: rgba(34,211,165,0.3); }
@@ -112,8 +118,10 @@
     .ch-tab-locked { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
     .ch-tab:not(.ch-tab-locked) { cursor: pointer; }
     .ch-tab.ch-tab-unlocked .ch-lock-icon { display: none; }
-    .chapter-nav { -ms-overflow-style: none; scrollbar-width: none; }
-    .chapter-nav::-webkit-scrollbar { display: none; }
+    .chapter-nav { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: #2a2a45 #0a0a12; }
+    .chapter-nav::-webkit-scrollbar { height: 6px; }
+    .chapter-nav::-webkit-scrollbar-track { background: #0a0a12; }
+    .chapter-nav::-webkit-scrollbar-thumb { background: #2a2a45; border-radius: 3px; }
     .progress-section { position: sticky; top: 4rem; z-index: 90; background: #0a0a12; padding-top: 12px; padding-bottom: 16px; margin-top: -12px; border-bottom: 1px solid #2a2a45; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
     .write-code-btn { width: 100%; margin-bottom: 12px; padding: 10px 16px; border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; background: rgba(91,91,245,0.15); color: #8b8bf8; border: 1px solid rgba(91,91,245,0.4); transition: all 0.2s; }
     .write-code-btn:hover { background: rgba(91,91,245,0.25); border-color: #5b5bf5; }
@@ -145,32 +153,58 @@
     .submit-btn { background: rgba(34,211,165,0.12); color: #22d3a5; }
     .submit-btn:hover { background: rgba(34,211,165,0.22); border-color: #22d3a5; }
     .sandbox-label { font-size: 0.75rem; font-weight: 600; color: #6b6b88; margin-bottom: 8px; display: block; }
+    @media (max-width: 1024px) {
+      .problems-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+    }
+    @media (max-width: 768px) {
+      .site-header { flex-wrap: wrap; min-height: auto; padding: 12px 16px; gap: 10px; }
+      .site-header .hdr-solved { order: 3; width: 100%; margin-left: 0; margin-top: 4px; }
+      .chapter-nav { order: 2; width: 100%; flex: 1 1 100%; margin-top: 4px; padding-bottom: 4px; }
+      .problems-grid { grid-template-columns: 1fr; padding-left: 16px; padding-right: 16px; padding-bottom: 60px; min-width: 0; }
+      .progress-section { margin-left: 16px; margin-right: 16px; max-width: none; }
+      .filter-bar { padding-left: 16px; padding-right: 16px; }
+      .hero { padding-left: 16px; padding-right: 16px; }
+      .card-header { flex-wrap: wrap; gap: 8px; }
+      .problem-title { min-width: 0; }
+      .topic-tag { flex-shrink: 0; }
+    }
     @media (max-width: 640px) {
-      .site-header { padding-left: 14px; padding-right: 14px; }
-      .hdr-div { margin-left: 10px; margin-right: 10px; }
+      .site-header { padding-left: 12px; padding-right: 12px; }
+      .hdr-div { display: none; }
       .ch-label { display: none; }
-      .problems-grid { grid-template-columns: 1fr; padding-left: 12px; padding-right: 12px; padding-bottom: 60px; }
+      .ch-tab .ch-num { display: inline; }
+      .problems-grid { padding-left: 12px; padding-right: 12px; grid-template-columns: 1fr; }
+      .progress-section { margin-left: 12px; margin-right: 12px; padding-left: 0; padding-right: 0; }
+      .filter-bar { padding-left: 12px; padding-right: 12px; flex-wrap: wrap; gap: 8px; }
+      .filter-btn { padding: 8px 12px; font-size: 0.78rem; }
+      .hero h1 { font-size: 1.75rem; }
+      .card-body { padding: 14px 16px; }
+      .card-footer { padding: 0 16px 14px; }
+      .code-block { font-size: 0.72rem; padding: 10px 12px; overflow-x: auto; }
+    }
+    @media (min-width: 1400px) {
+      .problems-grid { max-width: 1400px; }
     }
   </style>
 </head>
-<body class="min-h-screen overflow-x-hidden bg-bg text-text font-outfit relative">
+<body class="min-h-screen bg-bg text-text font-outfit relative box-border w-full max-w-[100vw]">
 
-  <header class="site-header sticky top-0 z-[100] h-16 flex items-center px-6 border-b border-border bg-bg/92 backdrop-blur-xl">
-    <a href="#" class="header-logo flex items-center gap-2.5 shrink-0 no-underline">
+  <header class="site-header sticky top-0 z-[100] min-h-16 flex items-center px-4 sm:px-6 border-b border-border bg-bg/95 backdrop-blur-xl">
+    <a href="#" class="header-logo flex items-center gap-2.5 shrink-0 no-underline min-w-0">
       <div class="logo-icon w-9 h-9 rounded-lg bg-accent flex items-center justify-center text-sm font-extrabold text-white font-mono shrink-0">PY</div>
-      <span class="logo-text font-extrabold text-[0.93rem] tracking-tight text-text">Workout <span class="text-accent">Problems</span></span>
+      <span class="logo-text font-extrabold text-[0.93rem] tracking-tight text-text truncate">Workout <span class="text-accent">Problems</span></span>
     </a>
-    <div class="hdr-div w-px h-7 bg-border mx-5 shrink-0"></div>
-    <nav class="chapter-nav flex items-center gap-1.5 flex-1 overflow-x-auto scrollbar-none">
-      <span class="ch-label text-[0.68rem] font-bold text-muted uppercase tracking-widest whitespace-nowrap mr-1 shrink-0">Chapters:</span>
-      <button type="button" class="ch-tab active flex items-center gap-1.5 border border-border rounded-[10px] font-outfit text-[0.82rem] font-semibold py-1.5 px-3.5 cursor-pointer transition-all whitespace-nowrap shrink-0 hover:border-accent hover:text-text" data-chapter="1">
-        <span class="ch-num font-mono text-[0.66rem] bg-white/15 py-0.5 px-1.5 rounded-md">01</span> Python Fundamentals
+    <div class="hdr-div w-px h-7 bg-border mx-3 sm:mx-5 shrink-0 hidden sm:block"></div>
+    <nav class="chapter-nav flex items-center gap-2 flex-1 min-w-0 py-2 sm:py-0" aria-label="Chapters">
+      <span class="ch-label text-[0.68rem] font-bold text-muted uppercase tracking-widest whitespace-nowrap mr-1 shrink-0 hidden sm:inline">Chapters:</span>
+      <button type="button" class="ch-tab active flex items-center gap-1.5 border border-border rounded-[10px] font-outfit text-[0.78rem] sm:text-[0.82rem] font-semibold py-1.5 px-3 sm:px-3.5 cursor-pointer transition-all whitespace-nowrap shrink-0 hover:border-accent hover:text-text" data-chapter="1">
+        <span class="ch-num font-mono text-[0.66rem] bg-white/15 py-0.5 px-1.5 rounded-md">01</span><span class="hidden sm:inline"> Python Fundamentals</span>
       </button>
-      <button type="button" class="ch-tab ch-tab-locked flex items-center gap-1.5 bg-transparent border border-border rounded-[10px] text-muted font-outfit text-[0.82rem] font-semibold py-1.5 px-3.5 transition-all whitespace-nowrap shrink-0" data-chapter="2" title="Complete all Chapter 1 problems to unlock" aria-disabled="true">
-        <span class="ch-num font-mono text-[0.66rem] bg-white/15 py-0.5 px-1.5 rounded-md">02</span> Control Flow <span class="ch-lock-icon" aria-hidden="true">🔒</span>
+      <button type="button" class="ch-tab ch-tab-locked flex items-center gap-1.5 bg-transparent border border-border rounded-[10px] text-muted font-outfit text-[0.78rem] sm:text-[0.82rem] font-semibold py-1.5 px-3 sm:px-3.5 transition-all whitespace-nowrap shrink-0" data-chapter="2" title="Complete all Chapter 1 problems to unlock" aria-disabled="true">
+        <span class="ch-num font-mono text-[0.66rem] bg-white/15 py-0.5 px-1.5 rounded-md">02</span><span class="hidden sm:inline"> Control Flow</span> <span class="ch-lock-icon" aria-hidden="true">🔒</span>
       </button>
-      <button type="button" class="ch-tab ch-tab-locked flex items-center gap-1.5 bg-transparent border border-border rounded-[10px] text-muted font-outfit text-[0.82rem] font-semibold py-1.5 px-3.5 transition-all whitespace-nowrap shrink-0" data-chapter="3" title="Complete all Chapter 2 problems to unlock" aria-disabled="true">
-        <span class="ch-num font-mono text-[0.66rem] bg-white/15 py-0.5 px-1.5 rounded-md">03</span> Python Functions <span class="ch-lock-icon" aria-hidden="true">🔒</span>
+      <button type="button" class="ch-tab ch-tab-locked flex items-center gap-1.5 bg-transparent border border-border rounded-[10px] text-muted font-outfit text-[0.78rem] sm:text-[0.82rem] font-semibold py-1.5 px-3 sm:px-3.5 transition-all whitespace-nowrap shrink-0" data-chapter="3" title="Complete all Chapter 2 problems to unlock" aria-disabled="true">
+        <span class="ch-num font-mono text-[0.66rem] bg-white/15 py-0.5 px-1.5 rounded-md">03</span><span class="hidden sm:inline"> Python Functions</span> <span class="ch-lock-icon" aria-hidden="true">🔒</span>
       </button>
     </nav>
     <div class="hdr-solved ml-auto shrink-0 font-mono text-[0.7rem] text-muted bg-surface border border-border rounded-lg py-1.5 px-3 whitespace-nowrap">Total solved: <span id="total-count" class="text-accent font-bold">0</span></div>
@@ -190,13 +224,13 @@
       <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="types">Data Types</button>
       <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="builtins">Built-ins</button>
     </div>
-    <div class="progress-section max-w-[900px] mx-auto mb-8 px-5">
-      <div class="progress-label flex justify-between text-[0.78rem] text-muted mb-2 font-mono"><span>Chapter 1 Progress</span><span id="ch1-prog-text">0 / 0 solved</span></div>
+    <div class="progress-section max-w-[900px] mx-auto mb-8 px-4 sm:px-5 w-full">
+      <div class="progress-label flex justify-between text-[0.78rem] text-muted mb-2 font-mono"><span class="font-semibold text-text">Chapter 1 — Python Fundamentals</span><span id="ch1-prog-text">0 / 0 solved</span></div>
       <div class="progress-bar-bg bg-surface border border-border rounded-[10px] h-2 overflow-hidden">
         <div class="progress-bar-fill h-full rounded-[10px] transition-[width] duration-500 ease-out bg-gradient-to-r from-accent to-accent3" id="ch1-prog-fill" style="width:0%"></div>
       </div>
     </div>
-    <div class="problems-grid grid gap-5 max-w-[1300px] mx-auto px-5 pb-20 relative z-10" style="grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));" id="ch1-grid"></div>
+    <div class="problems-grid grid gap-5 max-w-[1300px] mx-auto px-4 sm:px-5 pb-20 relative z-10 w-full min-w-0" style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));" id="ch1-grid"></div>
   </section>
 
   <section class="ch-section relative z-10" id="chapter-2">
@@ -204,21 +238,24 @@
       <img src="images/edure-logo-2.png" alt="Edure - AN ISO 9001:2015 CERTIFIED" class="mx-auto mb-6 max-h-24 w-auto object-contain" />
       <div class="badge inline-flex items-center gap-1.5 font-mono text-[0.68rem] py-1.5 px-3.5 rounded-full tracking-widest uppercase mb-4" style="background: rgba(91,91,245,0.12); border: 1px solid rgba(91,91,245,0.35); color: #5b5bf5;">📖 Chapter 02</div>
       <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight mb-2.5" style="color: #e8e8f0;">Control <span class="hl" style="color: #5b5bf5;">Flow</span></h1>
-      <p class="subtitle text-base font-light max-w-[520px] mx-auto" style="color: #6b6b88;">Problems on if/elif/else, for, while, break &amp; continue.</p>
+      <p class="subtitle text-base font-light max-w-[520px] mx-auto" style="color: #6b6b88;">Problems on if/elif/else, for, while, break, continue, number &amp; math, strings &amp; patterns.</p>
     </div>
     <div class="filter-bar ch2-fb flex gap-2 justify-center flex-wrap py-6 px-5 pb-8 relative z-10" id="ch2-filter-bar">
       <button type="button" class="filter-btn active bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="all">All (<span id="ch2-count">0</span>)</button>
       <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="if">if / else</button>
       <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="loops">Loops</button>
       <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="control">break &amp; continue</button>
+      <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="numbers">Number &amp; Math</button>
+      <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="strings">Strings Mastery</button>
+      <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="pattern">Pattern</button>
     </div>
-    <div class="progress-section max-w-[900px] mx-auto mb-8 px-5">
-      <div class="progress-label flex justify-between text-[0.78rem] text-muted mb-2 font-mono"><span>Chapter 2 Progress</span><span id="ch2-prog-text">0 / 0 solved</span></div>
+    <div class="progress-section max-w-[900px] mx-auto mb-8 px-4 sm:px-5 w-full">
+      <div class="progress-label flex justify-between text-[0.78rem] text-muted mb-2 font-mono"><span class="font-semibold text-text">Chapter 2 — Control Flow</span><span id="ch2-prog-text">0 / 0 solved</span></div>
       <div class="progress-bar-bg rounded-[10px] h-2 overflow-hidden" style="background: #12121e; border: 1px solid #2a2a45;">
         <div class="progress-bar-fill h-full rounded-[10px] transition-[width] duration-500 ease-out" id="ch2-prog-fill" style="width:0%; background: linear-gradient(90deg, #5b5bf5, #2dd4bf);"></div>
       </div>
     </div>
-    <div class="problems-grid grid gap-5 max-w-[1300px] mx-auto px-5 pb-20 relative z-10" style="grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));" id="ch2-grid"></div>
+    <div class="problems-grid grid gap-5 max-w-[1300px] mx-auto px-4 sm:px-5 pb-20 relative z-10 w-full min-w-0" style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));" id="ch2-grid"></div>
   </section>
 
   <section class="ch-section relative z-10" id="chapter-3">
@@ -236,13 +273,13 @@
       <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="lambdas">Lambdas</button>
       <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="closures">Closures</button>
     </div>
-    <div class="progress-section max-w-[900px] mx-auto mb-8 px-5">
-      <div class="progress-label flex justify-between text-[0.78rem] text-muted mb-2 font-mono"><span>Chapter 3 Progress</span><span id="ch3-prog-text">0 / 0 solved</span></div>
+    <div class="progress-section max-w-[900px] mx-auto mb-8 px-4 sm:px-5 w-full">
+      <div class="progress-label flex justify-between text-[0.78rem] text-muted mb-2 font-mono"><span class="font-semibold text-text">Chapter 3 — Python Functions</span><span id="ch3-prog-text">0 / 0 solved</span></div>
       <div class="progress-bar-bg rounded-[10px] h-2 overflow-hidden" style="background: #12121e; border: 1px solid #2a2a45;">
         <div class="progress-bar-fill h-full rounded-[10px] transition-[width] duration-500 ease-out" id="ch3-prog-fill" style="width:0%; background: linear-gradient(90deg, #5b5bf5, #2dd4bf);"></div>
       </div>
     </div>
-    <div class="problems-grid grid gap-5 max-w-[1300px] mx-auto px-5 pb-20 relative z-10" style="grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));" id="ch3-grid"></div>
+    <div class="problems-grid grid gap-5 max-w-[1300px] mx-auto px-4 sm:px-5 pb-20 relative z-10 w-full min-w-0" style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));" id="ch3-grid"></div>
   </section>
 
   <div id="code-modal-overlay" class="modal-overlay" aria-hidden="true" onclick="if(event.target===this) closeCodeModal()">
