@@ -122,7 +122,7 @@
     .chapter-nav::-webkit-scrollbar { height: 6px; }
     .chapter-nav::-webkit-scrollbar-track { background: #0a0a12; }
     .chapter-nav::-webkit-scrollbar-thumb { background: #2a2a45; border-radius: 3px; }
-    .progress-section { position: sticky; top: 4rem; z-index: 90; background: #0a0a12; padding-top: 12px; padding-bottom: 16px; margin-top: -12px; border-bottom: 1px solid #2a2a45; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    .progress-section { position: sticky; top: 4rem; z-index: 90; background: #0a0a12; padding-top: 8px; padding-bottom: 12px; margin-top: 0; border-bottom: 1px solid #2a2a45; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
     .write-code-btn { width: 100%; margin-bottom: 12px; padding: 10px 16px; border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; background: rgba(91,91,245,0.15); color: #8b8bf8; border: 1px solid rgba(91,91,245,0.4); transition: all 0.2s; }
     .write-code-btn:hover { background: rgba(91,91,245,0.25); border-color: #5b5bf5; }
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 1000; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; overflow-y: auto; }
@@ -161,7 +161,7 @@
       .site-header .hdr-solved { order: 3; width: 100%; margin-left: 0; margin-top: 4px; }
       .chapter-nav { order: 2; width: 100%; flex: 1 1 100%; margin-top: 4px; padding-bottom: 4px; }
       .problems-grid { grid-template-columns: 1fr; padding-left: 16px; padding-right: 16px; padding-bottom: 60px; min-width: 0; }
-      .progress-section { margin-left: 16px; margin-right: 16px; max-width: none; }
+      .progress-section { margin-left: 16px; margin-right: 16px; max-width: none; top: 9rem; }
       .filter-bar { padding-left: 16px; padding-right: 16px; }
       .hero { padding-left: 16px; padding-right: 16px; }
       .card-header { flex-wrap: wrap; gap: 8px; }
@@ -174,7 +174,7 @@
       .ch-label { display: none; }
       .ch-tab .ch-num { display: inline; }
       .problems-grid { padding-left: 12px; padding-right: 12px; grid-template-columns: 1fr; }
-      .progress-section { margin-left: 12px; margin-right: 12px; padding-left: 0; padding-right: 0; }
+      .progress-section { margin-left: 12px; margin-right: 12px; padding-left: 0; padding-right: 0; top: 7.6rem; }
       .filter-bar { padding-left: 12px; padding-right: 12px; flex-wrap: wrap; gap: 8px; }
       .filter-btn { padding: 8px 12px; font-size: 0.78rem; }
       .hero h1 { font-size: 1.75rem; }
@@ -211,6 +211,12 @@
   </header>
 
   <section class="ch-section active relative z-10" id="chapter-1">
+    <div class="progress-section max-w-[900px] mx-auto mb-4 px-4 sm:px-5 w-full">
+      <div class="progress-label flex justify-between text-[0.78rem] text-muted mb-2 font-mono"><span class="font-semibold text-text">Chapter 1 — Fundamentals</span><span id="ch1-prog-text">0 / 0 solved</span></div>
+      <div class="progress-bar-bg bg-surface border border-border rounded-[10px] h-2 overflow-hidden">
+        <div class="progress-bar-fill h-full rounded-[10px] transition-[width] duration-500 ease-out bg-gradient-to-r from-accent to-accent3" id="ch1-prog-fill" style="width:0%"></div>
+      </div>
+    </div>
     <div class="hero text-center py-12 px-5 pt-[50px] pb-8">
       <img src="images/edure-logo-2.png" alt="Edure - AN ISO 9001:2015 CERTIFIED" class="mx-auto mb-6 max-h-24 w-auto object-contain" />
       <div class="badge inline-flex items-center gap-1.5 font-mono text-[0.68rem] py-1.5 px-3.5 rounded-full tracking-widest uppercase mb-4" style="background: rgba(91,91,245,0.12); border: 1px solid rgba(91,91,245,0.35); color: #5b5bf5;">📖 Chapter 01</div>
@@ -224,16 +230,16 @@
       <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="types">Data Types</button>
       <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="builtins">Built-ins</button>
     </div>
-    <div class="progress-section max-w-[900px] mx-auto mb-8 px-4 sm:px-5 w-full">
-      <div class="progress-label flex justify-between text-[0.78rem] text-muted mb-2 font-mono"><span class="font-semibold text-text">Chapter 1 — Python Fundamentals</span><span id="ch1-prog-text">0 / 0 solved</span></div>
-      <div class="progress-bar-bg bg-surface border border-border rounded-[10px] h-2 overflow-hidden">
-        <div class="progress-bar-fill h-full rounded-[10px] transition-[width] duration-500 ease-out bg-gradient-to-r from-accent to-accent3" id="ch1-prog-fill" style="width:0%"></div>
-      </div>
-    </div>
     <div class="problems-grid grid gap-5 max-w-[1300px] mx-auto px-4 sm:px-5 pb-20 relative z-10 w-full min-w-0" style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));" id="ch1-grid"></div>
   </section>
 
   <section class="ch-section relative z-10" id="chapter-2">
+    <div class="progress-section max-w-[900px] mx-auto mb-4 px-4 sm:px-5 w-full">
+      <div class="progress-label flex justify-between text-[0.78rem] text-muted mb-2 font-mono"><span class="font-semibold text-text">Chapter 2 — Control Flow</span><span id="ch2-prog-text">0/0 solved</span></div>
+      <div class="progress-bar-bg rounded-[10px] h-2 overflow-hidden" style="background: #12121e; border: 1px solid #2a2a45;">
+        <div class="progress-bar-fill h-full rounded-[10px] transition-[width] duration-500 ease-out" id="ch2-prog-fill" style="width:0%; background: linear-gradient(90deg, #5b5bf5, #2dd4bf);"></div>
+      </div>
+    </div>
     <div class="hero text-center py-12 px-5 pt-[50px] pb-8">
       <img src="images/edure-logo-2.png" alt="Edure - AN ISO 9001:2015 CERTIFIED" class="mx-auto mb-6 max-h-24 w-auto object-contain" />
       <div class="badge inline-flex items-center gap-1.5 font-mono text-[0.68rem] py-1.5 px-3.5 rounded-full tracking-widest uppercase mb-4" style="background: rgba(91,91,245,0.12); border: 1px solid rgba(91,91,245,0.35); color: #5b5bf5;">📖 Chapter 02</div>
@@ -248,12 +254,6 @@
       <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="numbers">Number &amp; Math</button>
       <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="strings">Strings Mastery</button>
       <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="pattern">Pattern</button>
-    </div>
-    <div class="progress-section max-w-[900px] mx-auto mb-8 px-4 sm:px-5 w-full">
-      <div class="progress-label flex justify-between text-[0.78rem] text-muted mb-2 font-mono"><span class="font-semibold text-text">Chapter 2 — Control Flow</span><span id="ch2-prog-text">0 / 0 solved</span></div>
-      <div class="progress-bar-bg rounded-[10px] h-2 overflow-hidden" style="background: #12121e; border: 1px solid #2a2a45;">
-        <div class="progress-bar-fill h-full rounded-[10px] transition-[width] duration-500 ease-out" id="ch2-prog-fill" style="width:0%; background: linear-gradient(90deg, #5b5bf5, #2dd4bf);"></div>
-      </div>
     </div>
     <div class="problems-grid grid gap-5 max-w-[1300px] mx-auto px-4 sm:px-5 pb-20 relative z-10 w-full min-w-0" style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));" id="ch2-grid"></div>
   </section>
@@ -274,7 +274,7 @@
       <button type="button" class="filter-btn bg-surface border border-border text-muted py-1.5 px-4 rounded-lg font-outfit text-[0.82rem] font-semibold cursor-pointer transition-all hover:bg-accent hover:border-accent hover:text-white" data-topic="closures">Closures</button>
     </div>
     <div class="progress-section max-w-[900px] mx-auto mb-8 px-4 sm:px-5 w-full">
-      <div class="progress-label flex justify-between text-[0.78rem] text-muted mb-2 font-mono"><span class="font-semibold text-text">Chapter 3 — Python Functions</span><span id="ch3-prog-text">0 / 0 solved</span></div>
+      <div class="progress-label flex justify-between text-[0.78rem] text-muted mb-2 font-mono"><span class="font-semibold text-text">Chapter 3 —  Functions</span><span id="ch3-prog-text">0 / 0 solved</span></div>
       <div class="progress-bar-bg rounded-[10px] h-2 overflow-hidden" style="background: #12121e; border: 1px solid #2a2a45;">
         <div class="progress-bar-fill h-full rounded-[10px] transition-[width] duration-500 ease-out" id="ch3-prog-fill" style="width:0%; background: linear-gradient(90deg, #5b5bf5, #2dd4bf);"></div>
       </div>
