@@ -153,6 +153,18 @@ var ch1 = [
     desc: "Use set('hello') to get unique characters. Print the set and its length.",
     code: 'chars = ' + sf('set') + '(' + ss('"hello"') + ')\n' + sf('print') + '(chars, len(chars))',
     guidance: ["<code>set(\"hello\")</code> gives unique letters. len is 4."] },
+  { id: 60, title: "range() Basics", topic: "types", difficulty: "easy",
+    desc: "Use range(5) to get numbers 0 through 4. Convert to list and print it.",
+    code: 'r = ' + sf('range') + '(5)\n' + sf('print') + '(' + sf('list') + '(r))   ' + sc('# [0, 1, 2, 3, 4]'),
+    guidance: ["<code>range(5)</code> produces 0, 1, 2, 3, 4 (stop is exclusive).", "Wrap in <code>list()</code> to see the values."] },
+  { id: 61, title: "range() with start and stop", topic: "types", difficulty: "easy",
+    desc: "Use range(2, 7) to get numbers from 2 up to (but not including) 7. Convert to list and print.",
+    code: 'r = ' + sf('range') + '(2, 7)\n' + sf('print') + '(' + sf('list') + '(r))   ' + sc('# [2, 3, 4, 5, 6]'),
+    guidance: ["<code>range(start, stop)</code>: start is inclusive, stop is exclusive.", "range(2, 7) gives 2, 3, 4, 5, 6."] },
+  { id: 62, title: "range() with start, end, step", topic: "types", difficulty: "easy",
+    desc: "Use range(0, 10, 2) to get even numbers 0, 2, 4, 6, 8. The third argument is the step. Convert to list and print.",
+    code: 'r = ' + sf('range') + '(0, 10, 2)\n' + sf('print') + '(' + sf('list') + '(r))   ' + sc('# [0, 2, 4, 6, 8]'),
+    guidance: ["<code>range(start, end, step)</code>: step is the increment (default 1).", "range(0, 10, 2) gives 0, 2, 4, 6, 8."] },
   { id: 35, title: "len() and str()", topic: "builtins", difficulty: "easy",
     desc: "Use len() to get the length of a string and a list. Use str() to convert a number to a string.",
     code: 'word = ' + ss('"hello"') + '\n' + sf('print') + '(' + sf('len') + '(word), ' + sf('len') + '([1,2,3]))\n' + sf('print') + '(' + sf('str') + '(42) + ' + ss('" eggs"') + ')',
@@ -224,7 +236,37 @@ var ch1 = [
   { id: 52, title: "pow() or **", topic: "builtins", difficulty: "easy",
     desc: "Use pow(2, 10) for 2**10. Optionally pow(2, 10, 1000) for (2**10) % 1000.",
     code: sf('print') + '(' + sf('pow') + '(2, 10))\n' + sf('print') + '(pow(2, 10, ' + sb() + '))   ' + sc('# 24'),
-    guidance: ["<code>pow(2, 10)</code> is 1024.", "<code>pow(2, 10, 1000)</code> is 1024 % 1000 = 24. Fill: <code>1000</code>."] }
+    guidance: ["<code>pow(2, 10)</code> is 1024.", "<code>pow(2, 10, 1000)</code> is 1024 % 1000 = 24. Fill: <code>1000</code>."] },
+
+  /* ─── Datatype advance (7): range, tuple, list, bool, string, dictionary ─── */
+  { id: 53, title: "range: start, stop, step", topic: "datatype_advance", difficulty: "medium",
+    desc: "Use range(2, 11, 2) to get even numbers 2 to 10. Convert to list and print. Then use negative step: range(5, 0, -1).",
+    code: sf('print') + '(' + sf('list') + '(' + sf('range') + '(2, 11, 2)))   ' + sc('# [2,4,6,8,10]') + '\n' + sf('print') + '(list(range(5, 0, ' + sb() + ')))   ' + sc('# [5,4,3,2,1]'),
+    guidance: ["<code>range(start, stop, step)</code>: stop is exclusive.", "Negative step counts down. Fill: <code>-1</code>."] },
+  { id: 54, title: "Tuple: immutability and indexing", topic: "datatype_advance", difficulty: "medium",
+    desc: "Create t = (10, 20, 30). Print t[1] and t[-1]. Try t[1] = 99 (will raise TypeError — tuples are immutable).",
+    code: 't = (10, 20, 30)\n' + sf('print') + '(t[1], t[-1])   ' + sc('# 20 30') + '\n' + sc('# t[1] = 99  TypeError'),
+    guidance: ["Tuples are <strong>immutable</strong>: you cannot assign to t[i].", "Indexing and slicing work; t[1] is 20, t[-1] is 30."] },
+  { id: 55, title: "List: mutability and in-place methods", topic: "datatype_advance", difficulty: "medium",
+    desc: "Create L = [1, 2, 3]. Use L.append(4), L.insert(0, 0), then L.pop(). Print L.",
+    code: 'L = [1, 2, 3]\nL.' + sf('append') + '(4)\nL.' + sf('insert') + '(0, 0)\nL.' + sf('pop') + '()\n' + sf('print') + '(L)   ' + sc('# [0, 1, 2, 3]'),
+    guidance: ["Lists are <strong>mutable</strong>. append(4) adds at end; insert(0, 0) at start; pop() removes and returns last.", "Result: [0, 1, 2, 3]."] },
+  { id: 56, title: "bool: truthiness and bool()", topic: "datatype_advance", difficulty: "medium",
+    desc: "Use bool() on 0, 1, '', 'hi', [], [1]. Print bool(0), bool(''), bool([1]). Know: empty sequences are False.",
+    code: sf('print') + '(' + sf('bool') + '(0), ' + sf('bool') + '(' + ss('""') + '), ' + sf('bool') + '([1]))   ' + sc('# False False True'),
+    guidance: ["<code>bool(0)</code> and <code>bool('')</code> are False; <code>bool([1])</code> is True.", "Empty list [], empty string '', 0, None are falsy."] },
+  { id: 57, title: "String: immutability and slicing", topic: "datatype_advance", difficulty: "medium",
+    desc: "s = 'python'. Print s[0], s[-1], s[1:4]. Strings are immutable — s[0] = 'P' would raise TypeError.",
+    code: 's = ' + ss('"python"') + '\n' + sf('print') + '(s[0], s[-1], s[1:4])   ' + sc('# p n yth') + '\n' + sc('# s[0] = "P"  TypeError'),
+    guidance: ["Strings are <strong>immutable</strong>. Read with s[i] or s[a:b]; to change, build a new string.", "s[1:4] is 'yth' (indices 1,2,3)."] },
+  { id: 58, title: "Dictionary: keys, values, items", topic: "datatype_advance", difficulty: "medium",
+    desc: "d = {'a': 1, 'b': 2}. Print list(d.keys()), list(d.values()), list(d.items()). Add d['c'] = 3 and get d.get('c', 0).",
+    code: 'd = {' + ss('"a"') + ': 1, ' + ss('"b"') + ': 2}\n' + sf('print') + '(list(d.keys()), list(d.values()))\nd[' + ss('"c"') + '] = 3\n' + sf('print') + '(d.' + sf('get') + '(' + ss('"c"') + ', 0))   ' + sc('# 3'),
+    guidance: [".keys(), .values(), .items() return views; wrap in list() to print.", "d.get('c', 0) returns value or default; d['c']=3 then get gives 3."] },
+  { id: 59, title: "Dictionary: update and copy", topic: "datatype_advance", difficulty: "medium",
+    desc: "d = {1: 'a'}. Use d.update({2: 'b', 3: 'c'}). Create a shallow copy with d2 = d.copy() or dict(d). Print d, d2.",
+    code: 'd = {1: ' + ss('"a"') + '}\nd.' + sf('update') + '({2: ' + ss('"b"') + ', 3: ' + ss('"c"') + '})\nd2 = d.' + sf('copy') + '()\n' + sf('print') + '(d, d2)   ' + sc('# {1:a, 2:b, 3:c}'),
+    guidance: ["<code>d.update(other)</code> merges key-value pairs into d.", "<code>d.copy()</code> or <code>dict(d)</code> makes a shallow copy."] }
 ];
 
 /* ─────────────────────────────────────────────
@@ -567,44 +609,622 @@ var ch2 = [
 
 /* ─────────────────────────────────────────────
    CHAPTER 3 — Python Functions
+   basics: 10 | advanced: 20 | scope: 7 | closures: 5
 ───────────────────────────────────────────── */
 var ch3 = [
-  { id: 1, title: "Define and Call", topic: "definition", difficulty: "easy",
-    desc: "Define a function greet() that takes no arguments and prints 'Hello!' Then call it.",
+  /* ─── Basics (10): definition, call, return, parameters, arguments ─── */
+  { id: 1, title: "Define and Call", topic: "basics", difficulty: "easy",
+    desc: "Define a function greet() that takes no arguments and prints 'Hello!'. Then call it.",
     code: sk('def') + ' ' + sf('greet') + '():\n  ' + sf('print') + '(' + ss('"Hello!"') + ')\n\n' + sb() + '()',
     guidance: ["<code>def name():</code> defines a function with no parameters.", "Indent the body. Call with <code>greet()</code>. Fill the blank with <code>greet</code>."] },
-  { id: 2, title: "Parameter and Return", topic: "parameters", difficulty: "easy",
-    desc: "Write a function double(n) that returns n * 2. Print the result of double(7).",
+  { id: 2, title: "Parameter and Return", topic: "basics", difficulty: "easy",
+    desc: "Write a function double(n) that takes one parameter and returns n * 2. Print double(7).",
     code: sk('def') + ' ' + sf('double') + '(n):\n  ' + sk('return') + ' ' + sb() + ' * 2\n\n' + sf('print') + '(' + sf('double') + '(7))',
-    guidance: ["Parameters go in parentheses: <code>def double(n):</code>.", "<code>return</code> sends a value back. Fill: <code>return n * 2</code>.", "Output: 14."] },
-  { id: 3, title: "Default Argument", topic: "parameters", difficulty: "easy",
-    desc: "Define greet(name, greeting='Hello') and call it with just a name; then with name and 'Hi'.",
-    code: sk('def') + ' ' + sf('greet') + '(name, greeting=' + ss('"Hello"') + '):\n  ' + sf('print') + '(greeting + ' + ss('" "') + ' + name)\n\n' + sf('greet') + '(' + ss('"Alex"') + ')\n' + sf('greet') + '(' + ss('"Bo"') + ', ' + ss('"Hi"') + ')',
-    guidance: ["Default values: <code>greeting='Hello'</code>.", "greet(\"Alex\") uses default → \"Hello Alex\".", "greet(\"Bo\", \"Hi\") → \"Hi Bo\"."] },
-  { id: 4, title: "Local Scope", topic: "scope", difficulty: "medium",
-    desc: "Inside a function, assign to a variable. Print it inside the function; then try to print it outside (it will error unless you use global).",
-    code: sk('def') + ' ' + sf('set_x') + '():\n  x = ' + sn('10') + '\n  ' + sf('print') + '(x)\n\n' + sf('set_x') + '()\n' + sf('print') + '(x)  ' + sc('# NameError if x only exists inside set_x'),
-    guidance: ["Variables assigned inside a function are <strong>local</strong>.", "After set_x(), x does not exist in the global scope.", "To modify a global, use <code>global x</code> (usually avoid)."] },
-  { id: 5, title: "lambda", topic: "lambdas", difficulty: "easy",
-    desc: "Create a lambda that adds 10 to its argument. Use it: (lambda x: x+10)(5) should be 15.",
-    code: 'add_10 = ' + sk('lambda') + ' x: x + ' + sn('10') + '\n' + sf('print') + '(add_10(5))   ' + sc('# 15') + '\n' + sf('print') + '((' + sk('lambda') + ' x: x + 10)(' + sn('5') + '))',
-    guidance: ["<code>lambda x: x + 10</code> is a small anonymous function.", "Call with <code>add_10(5)</code> or <code>(lambda x: x+10)(5)</code>.", "Fill the last print with <code>5</code> so it prints 15."] },
-  { id: 6, title: "Closure", topic: "closures", difficulty: "medium",
-    desc: "Define make_adder(n) that returns a function. The returned function adds n to its argument. Call make_adder(3)(4) and get 7.",
-    code: sk('def') + ' ' + sf('make_adder') + '(n):\n  ' + sk('def') + ' ' + sf('adder') + '(x):\n    ' + sk('return') + ' x + ' + sb() + '\n  ' + sk('return') + ' adder\n\n' + sf('print') + '(' + sf('make_adder') + '(3)(4))  ' + sc('# 7'),
-    guidance: ["<code>adder</code> closes over <code>n</code> from the outer scope.", "Fill the blank with <code>n</code>. So make_adder(3) returns a function that adds 3.", "Calling that with 4 gives 7."] },
-  { id: 7, title: "Multiple Returns", topic: "definition", difficulty: "easy",
-    desc: "Write a function min_max(a, b) that returns the smaller and larger of two numbers as a tuple.",
-    code: sk('def') + ' ' + sf('min_max') + '(a, b):\n  ' + sk('if') + ' a < b:\n    ' + sk('return') + ' (a, b)\n  ' + sk('return') + ' (' + sb() + ', ' + sb() + ')\n\n' + sf('print') + '(' + sf('min_max') + '(10, 3))',
-    guidance: ["Return a tuple: <code>return (a, b)</code>.", "In the else case return <code>(b, a)</code> so the smaller is first.", "Output: (3, 10)."] },
-  { id: 8, title: "*args", topic: "parameters", difficulty: "medium",
-    desc: "Define sum_all(*args) that returns the sum of all arguments. sum_all(1, 2, 3) should return 6.",
-    code: sk('def') + ' ' + sf('sum_all') + '(*args):\n  total = ' + sn('0') + '\n  ' + sk('for') + ' n ' + sk('in') + ' args:\n    total = total + n\n  ' + sk('return') + ' total\n\n' + sf('print') + '(' + sf('sum_all') + '(1, 2, 3))',
-    guidance: ["<code>*args</code> collects extra positional arguments into a tuple.", "Loop over <code>args</code> and add each to total.", "Initial value for total is 0."] },
-  { id: 9, title: "Scope: Local vs Global", topic: "scope", difficulty: "medium",
-    desc: "Define a function that uses a local variable and a global variable. Understand which is which.",
-    code: 'count = ' + sn('0') + '  ' + sc('# global') + '\n\n' + sk('def') + ' ' + sf('increment') + '():\n  local_count = ' + sn('1') + '  ' + sc('# local') + '\n  ' + sk('return') + ' count + ' + sb() + '\n\n' + sf('print') + '(' + sf('increment') + '())',
-    guidance: ["<strong>Global</strong> <code>count</code> is visible inside the function.", "<strong>Local</strong> <code>local_count</code> exists only inside the function.", "Fill the blank with <code>local_count</code> so the function returns 0 + 1 = 1.", "Understanding scope prevents bugs when reusing variable names."] }
+    guidance: ["Parameters go in parentheses: <code>def double(n):</code>.", "<code>return</code> sends a value back. Fill: <code>n</code>. Output: 14."] },
+  { id: 3, title: "Multiple Parameters", topic: "basics", difficulty: "easy",
+    desc: "Define add(a, b) that returns a + b. Call it with 3 and 5; print the result.",
+    code: sk('def') + ' ' + sf('add') + '(a, b):\n  ' + sk('return') + ' a + b\n\n' + sf('print') + '(' + sf('add') + '(' + sb() + ', ' + sb() + '))  ' + sc('# 8'),
+    guidance: ["Multiple parameters: <code>def add(a, b):</code>.", "Arguments are passed by position: <code>add(3, 5)</code> → 8."] },
+  { id: 4, title: "Return and Use Value", topic: "basics", difficulty: "easy",
+    desc: "Write square(x) that returns x**2. Store the result of square(4) in a variable and print it.",
+    code: sk('def') + ' ' + sf('square') + '(x):\n  ' + sk('return') + ' x ** 2\n\nresult = ' + sf('square') + '(' + sn('4') + ')\n' + sf('print') + '(result)  ' + sc('# 16'),
+    guidance: ["<code>return</code> sends a value back to the caller.", "Assign the return value: <code>result = square(4)</code>. Fill: <code>4</code>."] },
+  { id: 5, title: "Parameters vs Arguments", topic: "basics", difficulty: "easy",
+    desc: "Define greet(name). The parameter is 'name'; when you call greet('Ali'), the argument is 'Ali'. Print the greeting.",
+    code: sk('def') + ' ' + sf('greet') + '(name):\n  ' + sf('print') + '(' + ss('"Hi, "') + ' + ' + sb() + ')\n\n' + sf('greet') + '(' + ss('"Ali"') + ')',
+    guidance: ["<strong>Parameter</strong> is the name in the definition; <strong>argument</strong> is the value passed.", "Inside the function use the parameter name. Fill: <code>name</code>."] },
+  { id: 6, title: "Call with Positional Arguments", topic: "basics", difficulty: "easy",
+    desc: "Define repeat(s, n) that returns s * n. Call it with 'ab' and 3; print the result ('ababab').",
+    code: sk('def') + ' ' + sf('repeat') + '(s, n):\n  ' + sk('return') + ' s * n\n\n' + sf('print') + '(' + sf('repeat') + '(' + ss('"ab"') + ', ' + sn('3') + '))',
+    guidance: ["Positional arguments match parameters in order: first arg → first param, second → second.", "repeat(\"ab\", 3) gives \"ababab\"."] },
+  { id: 7, title: "Return None", topic: "basics", difficulty: "easy",
+    desc: "A function without a return statement returns None. Define say(msg) that only prints msg; then print the return value of say('hi').",
+    code: sk('def') + ' ' + sf('say') + '(msg):\n  ' + sf('print') + '(msg)\n\n' + sf('print') + '(' + sf('say') + '(' + ss('"hi"') + '))  ' + sc('# None'),
+    guidance: ["If there is no <code>return</code>, the function returns <code>None</code>.", "So print(say(\"hi\")) prints \"hi\" then None."] },
+  { id: 8, title: "Function Returns a Value", topic: "basics", difficulty: "easy",
+    desc: "Write is_even(n) that returns True if n % 2 == 0 else False. Print is_even(8) and is_even(7).",
+    code: sk('def') + ' ' + sf('is_even') + '(n):\n  ' + sk('return') + ' n % 2 == ' + sn('0') + '\n\n' + sf('print') + '(' + sf('is_even') + '(8), ' + sf('is_even') + '(7))',
+    guidance: ["Return the result of a boolean expression.", "8 % 2 == 0 is True; 7 % 2 == 0 is False."] },
+  { id: 9, title: "Define and Call with One Argument", topic: "basics", difficulty: "easy",
+    desc: "Define triple(x) that returns 3 * x. Call triple(5) and print the result.",
+    code: sk('def') + ' ' + sf('triple') + '(x):\n  ' + sk('return') + ' 3 * x\n\n' + sf('print') + '(' + sf('triple') + '(' + sb() + '))  ' + sc('# 15'),
+    guidance: ["One parameter <code>x</code>; one argument <code>5</code> when you call <code>triple(5)</code>.", "Fill: <code>5</code>."] },
+  { id: 10, title: "Arguments in Call", topic: "basics", difficulty: "easy",
+    desc: "Given def greet(first, last): print(first, last), call it so it prints 'Jane Doe'.",
+    code: sk('def') + ' ' + sf('greet') + '(first, last):\n  ' + sf('print') + '(first, last)\n\n' + sf('greet') + '(' + sb() + ', ' + sb() + ')',
+    guidance: ["Pass two arguments in order: first then last.", "Fill: <code>\"Jane\"</code>, <code>\"Doe\"</code> (or 'Jane', 'Doe')."] },
+
+  /* ─── Advanced (20): multiple return, keyword/positional, *args, **kwargs, decorator, lambda (min 4), other ─── */
+  { id: 11, title: "Multiple Return (tuple)", topic: "advanced", difficulty: "easy",
+    desc: "Write min_max(a, b) that returns the smaller and larger as a tuple. Print min_max(10, 3).",
+    code: sk('def') + ' ' + sf('min_max') + '(a, b):\n  ' + sk('if') + ' a < b:\n    ' + sk('return') + ' (a, b)\n  ' + sk('return') + ' (b, a)\n\n' + sf('print') + '(' + sf('min_max') + '(10, 3))  ' + sc('# (3, 10)'),
+    guidance: ["You can return one tuple: <code>return (a, b)</code>.", "Return (b, a) when b is smaller so order is (min, max)."] },
+  { id: 12, title: "Keyword Arguments", topic: "advanced", difficulty: "easy",
+    desc: "Define greet(greeting, name) and call it using keyword arguments: name='Sam', greeting='Hi'.",
+    code: sk('def') + ' ' + sf('greet') + '(greeting, name):\n  ' + sf('print') + '(greeting + ' + ss('" "') + ' + name)\n\n' + sf('greet') + '(name=' + ss('"Sam"') + ', greeting=' + ss('"Hi"') + ')',
+    guidance: ["Keyword args: <code>greet(name=\"Sam\", greeting=\"Hi\")</code> — order does not matter.", "Output: Hi Sam."] },
+  { id: 13, title: "Positional vs Keyword", topic: "advanced", difficulty: "easy",
+    desc: "Define f(a, b, c). Call f(1, 2, 3) then f(1, c=3, b=2). Both should give the same result.",
+    code: sk('def') + ' ' + sf('f') + '(a, b, c):\n  ' + sk('return') + ' a + b + c\n\n' + sf('print') + '(' + sf('f') + '(1, 2, 3), ' + sf('f') + '(1, ' + sb() + '=3, b=2))  ' + sc('# 6 6'),
+    guidance: ["Positional: order matters. Keyword: name=value.", "Fill: <code>c</code> so f(1, c=3, b=2) is 6."] },
+  { id: 14, title: "*args", topic: "advanced", difficulty: "medium",
+    desc: "Define sum_all(*args) that returns the sum of all positional arguments. sum_all(1, 2, 3) → 6.",
+    code: sk('def') + ' ' + sf('sum_all') + '(*args):\n  total = 0\n  ' + sk('for') + ' n ' + sk('in') + ' args:\n    total += n\n  ' + sk('return') + ' total\n\n' + sf('print') + '(' + sf('sum_all') + '(1, 2, 3))',
+    guidance: ["<code>*args</code> collects extra positional arguments into a tuple.", "Loop over args and add to total."] },
+  { id: 15, title: "**kwargs", topic: "advanced", difficulty: "medium",
+    desc: "Define print_kw(**kwargs) that prints each key and value. Call print_kw(a=1, b=2).",
+    code: sk('def') + ' ' + sf('print_kw') + '(**kwargs):\n  ' + sk('for') + ' k, v ' + sk('in') + ' kwargs.' + sf('items') + '():\n    ' + sf('print') + '(k, v)\n\n' + sf('print_kw') + '(a=1, b=2)',
+    guidance: ["<code>**kwargs</code> collects keyword arguments into a dict.", "kwargs.items() gives (key, value) pairs."] },
+  { id: 16, title: "*args and **kwargs", topic: "advanced", difficulty: "medium",
+    desc: "Define f(*args, **kwargs) that returns (len(args), len(kwargs)). Print f(1, 2, x=3).",
+    code: sk('def') + ' ' + sf('f') + '(*args, **kwargs):\n  ' + sk('return') + ' (' + sf('len') + '(args), ' + sf('len') + '(kwargs))\n\n' + sf('print') + '(' + sf('f') + '(1, 2, x=3))  ' + sc('# (2, 1)'),
+    guidance: ["*args gets (1, 2); **kwargs gets {\"x\": 3}.", "len(args)==2, len(kwargs)==1."] },
+  { id: 17, title: "Default and Keyword", topic: "advanced", difficulty: "easy",
+    desc: "Define greet(name, greeting='Hello'). Call greet('A') then greet('B', greeting='Hi').",
+    code: sk('def') + ' ' + sf('greet') + '(name, greeting=' + ss('"Hello"') + '):\n  ' + sf('print') + '(greeting, name)\n\n' + sf('greet') + '(' + ss('"A"') + ')\n' + sf('greet') + '(' + ss('"B"') + ', greeting=' + ss('"Hi"') + ')',
+    guidance: ["Default: greet(\"A\") uses greeting='Hello'.", "Keyword overrides: greet(\"B\", greeting=\"Hi\")."] },
+  { id: 18, title: "Decorator Basics", topic: "advanced", difficulty: "medium",
+    desc: "Write a decorator log that prints 'calling' before invoking the function. Apply it to def hi(): print('hi').",
+    code: sk('def') + ' ' + sf('log') + '(fn):\n  ' + sk('def') + ' wrapper():\n    ' + sf('print') + '(' + ss('"calling"') + ')\n    ' + sk('return') + ' fn()\n  ' + sk('return') + ' wrapper\n\n@' + sf('log') + '\n' + sk('def') + ' ' + sf('hi') + '():\n  ' + sf('print') + '(' + ss('"hi"') + ')\n\n' + sf('hi') + '()',
+    guidance: ["Decorator takes a function and returns a wrapper.", "@log applies log to hi; calling hi() runs wrapper, which prints then fn()."] },
+  { id: 19, title: "Decorator with Wrapper", topic: "advanced", difficulty: "medium",
+    desc: "Write a decorator that doubles the return value of a function. Apply it to def two(): return 2 and print the result.",
+    code: sk('def') + ' ' + sf('double_ret') + '(fn):\n  ' + sk('def') + ' wrapper():\n    ' + sk('return') + ' fn() * ' + sn('2') + '\n  ' + sk('return') + ' wrapper\n\n@' + sf('double_ret') + '\n' + sk('def') + ' two(): ' + sk('return') + ' 2\n\n' + sf('print') + '(' + sf('two') + '())  ' + sc('# 4'),
+    guidance: ["Wrapper calls fn() and returns twice that value.", "two() returns 2; decorator makes it return 4."] },
+  { id: 20, title: "Lambda: Add", topic: "advanced", difficulty: "easy",
+    desc: "Create a lambda that adds 10 to its argument. Assign to add_10; print add_10(5) → 15.",
+    code: 'add_10 = ' + sk('lambda') + ' x: x + 10\n' + sf('print') + '(add_10(' + sn('5') + '))  ' + sc('# 15'),
+    guidance: ["<code>lambda x: x + 10</code> is an anonymous function.", "add_10(5) returns 15. Fill: 5."] },
+  { id: 21, title: "Lambda: Double", topic: "advanced", difficulty: "easy",
+    desc: "Create lambda double that multiplies its argument by 2. Print double(7).",
+    code: 'double = ' + sk('lambda') + ' x: x * ' + sn('2') + '\n' + sf('print') + '(double(7))  ' + sc('# 14'),
+    guidance: ["<code>lambda x: x * 2</code>.", "double(7) is 14. Fill: 2."] },
+  { id: 22, title: "Lambda: Compare", topic: "advanced", difficulty: "easy",
+    desc: "Create lambda is_positive that returns True if x > 0 else False. Print is_positive(5) and is_positive(-1).",
+    code: 'is_positive = ' + sk('lambda') + ' x: x ' + sb() + ' 0\n' + sf('print') + '(is_positive(5), is_positive(-1))  ' + sc('# True False'),
+    guidance: ["<code>lambda x: x > 0</code> returns a boolean.", "Fill: <code>&gt;</code> (greater than)."] },
+  { id: 23, title: "Lambda: Multi-arg", topic: "advanced", difficulty: "easy",
+    desc: "Lambda can take multiple parameters: area = lambda w, h: w * h. Print area(3, 4).",
+    code: 'area = ' + sk('lambda') + ' w, h: w * h\n' + sf('print') + '(area(' + sn('3') + ', ' + sn('4') + '))  ' + sc('# 12'),
+    guidance: ["<code>lambda w, h: w * h</code> takes two arguments.", "area(3, 4) is 12."] },
+  { id: 24, title: "Keyword-Only (after *)", topic: "advanced", difficulty: "medium",
+    desc: "Define f(a, *, b) so b must be passed by keyword. Call f(1, b=2) and print a + b.",
+    code: sk('def') + ' ' + sf('f') + '(a, *, b):\n  ' + sk('return') + ' a + b\n\n' + sf('print') + '(' + sf('f') + '(1, b=' + sn('2') + '))  ' + sc('# 3'),
+    guidance: ["After <code>*</code>, parameters are keyword-only.", "f(1, b=2) is valid; f(1, 2) would be invalid. Fill: 2."] },
+  { id: 25, title: "Unpack List to *args", topic: "advanced", difficulty: "medium",
+    desc: "Define add3(a,b,c) return a+b+c. Given nums = [1,2,3], call add3 with unpacking: add3(*nums).",
+    code: sk('def') + ' ' + sf('add3') + '(a, b, c):\n  ' + sk('return') + ' a + b + c\n\nnums = [1, 2, 3]\n' + sf('print') + '(' + sf('add3') + '(*nums))  ' + sc('# 6'),
+    guidance: ["<code>*nums</code> unpacks the list into three positional arguments.", "add3(*[1,2,3]) is add3(1, 2, 3)."] },
+  { id: 26, title: "Unpack Dict to **kwargs", topic: "advanced", difficulty: "medium",
+    desc: "Define greet(greeting, name). Given d = {'greeting':'Hi','name':'Jo'}, call greet(**d).",
+    code: sk('def') + ' ' + sf('greet') + '(greeting, name):\n  ' + sf('print') + '(greeting, name)\n\nd = {' + ss('"greeting"') + ': ' + ss('"Hi"') + ', ' + ss('"name"') + ': ' + ss('"Jo"') + '}\n' + sf('greet') + '(**d)',
+    guidance: ["<code>**d</code> unpacks the dict as keyword arguments.", "greet(**d) is greet(greeting='Hi', name='Jo')."] },
+  { id: 27, title: "Return Multiple Unpack", topic: "advanced", difficulty: "easy",
+    desc: "Write get_pair() that returns (10, 20). Call it and unpack into x, y; print x + y.",
+    code: sk('def') + ' ' + sf('get_pair') + '():\n  ' + sk('return') + ' (10, 20)\n\nx, y = ' + sf('get_pair') + '()\n' + sf('print') + '(x + y)  ' + sc('# 30'),
+    guidance: ["Return a tuple; assign with unpacking: <code>x, y = get_pair()</code>.", "x=10, y=20, so x+y=30."] },
+  { id: 28, title: "Function as Object", topic: "advanced", difficulty: "medium",
+    desc: "Assign a function to a variable: f = abs. Then call f(-5) and print the result.",
+    code: 'f = ' + sf('abs') + '\n' + sf('print') + '(f(' + sn('-5') + '))  ' + sc('# 5'),
+    guidance: ["In Python, functions are objects. <code>f = abs</code>; then <code>f(-5)</code> is abs(-5).", "Fill: -5."] },
+  { id: 29, title: "Decorator with Args", topic: "advanced", difficulty: "hard",
+    desc: "Write repeat(n) that returns a decorator which runs the function n times and returns the last result. Use @repeat(2) on def one(): return 1; print one() → 1.",
+    code: sk('def') + ' ' + sf('repeat') + '(n):\n  ' + sk('def') + ' dec(fn):\n    ' + sk('def') + ' wrapper():\n      out = None\n      ' + sk('for') + ' _ ' + sk('in') + ' ' + sf('range') + '(n): out = fn()\n      ' + sk('return') + ' out\n    ' + sk('return') + ' wrapper\n  ' + sk('return') + ' dec\n\n@' + sf('repeat') + '(2)\n' + sk('def') + ' one(): ' + sk('return') + ' 1\n\n' + sf('print') + '(one())',
+    guidance: ["repeat(n) returns a decorator dec. dec(fn) returns wrapper that calls fn() n times.", "Return the last result. one() is called twice, returns 1."] },
+  { id: 30, title: "Lambda in sorted", topic: "advanced", difficulty: "medium",
+    desc: "Sort [(1,2), (3,1), (2,3)] by the second element using key=lambda t: t[1]. Print result.",
+    code: 'pairs = [(1, 2), (3, 1), (2, 3)]\n' + sf('print') + '(' + sf('sorted') + '(pairs, key=' + sk('lambda') + ' t: t[1]))  ' + sc('# [(3,1), (1,2), (2,3)]'),
+    guidance: ["key=lambda t: t[1] uses the second element of each tuple for comparison.", "Sorted by 2, 1, 3 → (3,1), (1,2), (2,3)."] },
+  { id: 71, title: "Decorator: Print Before and After", topic: "advanced", difficulty: "medium",
+    desc: "Write a decorator that prints 'start' before calling the function and 'end' after. Apply it to a function that prints 'run'.",
+    code: sk('def') + ' ' + sf('trace') + '(fn):\n  ' + sk('def') + ' wrapper():\n    ' + sf('print') + '(' + ss('"start"') + ')\n    fn()\n    ' + sf('print') + '(' + ss('"end"') + ')\n  ' + sk('return') + ' wrapper\n\n@' + sf('trace') + '\n' + sk('def') + ' run(): ' + sf('print') + '(' + ss('"run"') + ')\n\n' + sf('run') + '()',
+    guidance: ["Call fn() in the middle of the wrapper; print before and after.", "Output: start, run, end."] },
+  { id: 72, title: "Decorator: Wrapper with Arguments", topic: "advanced", difficulty: "medium",
+    desc: "Write a decorator for a function that takes one argument. The wrapper should pass the argument through: def add_one(x): return x+1; @deco; add_one(5) → 6.",
+    code: sk('def') + ' ' + sf('pass_through') + '(fn):\n  ' + sk('def') + ' wrapper(x):\n    ' + sk('return') + ' fn(x)\n  ' + sk('return') + ' wrapper\n\n@' + sf('pass_through') + '\n' + sk('def') + ' add_one(x): ' + sk('return') + ' x + 1\n\n' + sf('print') + '(' + sf('add_one') + '(5))  ' + sc('# 6'),
+    guidance: ["Wrapper must accept the same arguments as the wrapped function.", "wrapper(x) receives 5, calls fn(5), returns 6."] },
+  { id: 73, title: "Decorator: Caching (Memoization)", topic: "advanced", difficulty: "hard",
+    desc: "Write a simple cache decorator: store results in a dict keyed by argument. On repeat call with same arg, return cached value. Apply to def slow(n): return n*2; print slow(3), slow(3).",
+    code: sk('def') + ' ' + sf('cache') + '(fn):\n  saved = {}\n  ' + sk('def') + ' wrapper(x):\n    ' + sk('if') + ' x ' + sk('not') + ' ' + sk('in') + ' saved:\n      saved[x] = fn(x)\n    ' + sk('return') + ' saved[x]\n  ' + sk('return') + ' wrapper\n\n@' + sf('cache') + '\n' + sk('def') + ' slow(n): ' + sk('return') + ' n * 2\n\n' + sf('print') + '(slow(3), slow(3))  ' + sc('# 6 6'),
+    guidance: ["Use a dict in the closure to store fn(x) by x.", "First slow(3) calls fn(3) and stores 6; second slow(3) returns saved[3] without calling fn."] },
+  { id: 43, title: "Nested Function: Define and Call", topic: "advanced", difficulty: "medium",
+    desc: "Define outer() that contains an inner function inner() which returns 42. outer() should call inner() and return its result. Print outer().",
+    code: sk('def') + ' ' + sf('outer') + '():\n  ' + sk('def') + ' ' + sf('inner') + '():\n    ' + sk('return') + ' 42\n  ' + sk('return') + ' ' + sf('inner') + '()\n\n' + sf('print') + '(' + sf('outer') + '())  ' + sc('# 42'),
+    guidance: ["You can define a function inside another function.", "inner() is only visible inside outer. outer() calls inner() and returns 42."] },
+  { id: 44, title: "Nested Function: Access Enclosing Variable", topic: "advanced", difficulty: "medium",
+    desc: "Define outer(x) with a nested inner() that returns x + 1. outer should call inner and return the result. Print outer(10).",
+    code: sk('def') + ' ' + sf('outer') + '(x):\n  ' + sk('def') + ' ' + sf('inner') + '():\n    ' + sk('return') + ' x + 1\n  ' + sk('return') + ' ' + sf('inner') + '()\n\n' + sf('print') + '(' + sf('outer') + '(10))  ' + sc('# 11'),
+    guidance: ["inner can read the enclosing scope: it sees <code>x</code> from outer.", "outer(10) calls inner(), which returns 10 + 1 = 11."] },
+  { id: 45, title: "Nested Function: Return Inner Function", topic: "advanced", difficulty: "medium",
+    desc: "Define outer(prefix) with nested greet(name) that returns prefix + ' ' + name. outer should return the greet function (not call it). Then f = outer('Hi'); print f('Ali').",
+    code: sk('def') + ' ' + sf('outer') + '(prefix):\n  ' + sk('def') + ' ' + sf('greet') + '(name):\n    ' + sk('return') + ' prefix + ' + ss('" "') + ' + name\n  ' + sk('return') + ' greet\n\nf = ' + sf('outer') + '(' + ss('"Hi"') + ')\n' + sf('print') + '(f(' + ss('"Ali"') + '))  ' + sc('# Hi Ali'),
+    guidance: ["Return the inner function without calling it: <code>return greet</code>.", "f = outer('Hi') gives f the greet that remembers prefix='Hi'. f('Ali') returns 'Hi Ali'."] },
+
+  /* ─── Scope (7) ─── */
+  { id: 31, title: "Local Scope", topic: "scope", difficulty: "medium",
+    desc: "Inside a function, assign x = 10 and print x. Outside, print x (will error unless global).",
+    code: sk('def') + ' ' + sf('set_x') + '():\n  x = 10\n  ' + sf('print') + '(x)\n\n' + sf('set_x') + '()\n' + sf('print') + '(x)  ' + sc('# NameError'),
+    guidance: ["Variables assigned inside a function are <strong>local</strong>.", "x exists only inside set_x(). Outside, x is not defined."] },
+  { id: 32, title: "Local vs Global", topic: "scope", difficulty: "medium",
+    desc: "Global count = 0. Function increment() has local_count = 1. Return count + local_count.",
+    code: 'count = 0\n\n' + sk('def') + ' ' + sf('increment') + '():\n  local_count = 1\n  ' + sk('return') + ' count + local_count\n\n' + sf('print') + '(increment())  ' + sc('# 1'),
+    guidance: ["<strong>Global</strong> count is visible inside. <strong>Local</strong> local_count only in function.", "Return 0 + 1 = 1."] },
+  { id: 33, title: "global Keyword", topic: "scope", difficulty: "medium",
+    desc: "Use global to modify a variable from inside a function. Set total = 0; in add(n) do global total; total += n. Call add(5), add(3), print total.",
+    code: 'total = 0\n\n' + sk('def') + ' ' + sf('add') + '(n):\n  ' + sk('global') + ' total\n  total += n\n\n' + sf('add') + '(5)\n' + sf('add') + '(3)\n' + sf('print') + '(total)  ' + sc('# 8'),
+    guidance: ["<code>global total</code> says 'use the global total', not create a local.", "After add(5) and add(3), total is 8."] },
+  { id: 34, title: "Same Name Local Shadows", topic: "scope", difficulty: "medium",
+    desc: "Global x = 1. Define f() with local x = 2; print x inside f (prints 2). Print x after f (still 1).",
+    code: 'x = 1\n\n' + sk('def') + ' ' + sf('f') + '():\n  x = 2\n  ' + sf('print') + '(x)\n\n' + sf('f') + '()\n' + sf('print') + '(x)  ' + sc('# 2 then 1'),
+    guidance: ["Local <code>x = 2</code> shadows the global x inside f.", "Outside f, global x is still 1."] },
+  { id: 35, title: "LEGB: Built-in", topic: "scope", difficulty: "medium",
+    desc: "Inside a function, print(len([1,2,3])). len is found in built-in scope. What does it print?",
+    code: sk('def') + ' ' + sf('demo') + '():\n  ' + sf('print') + '(' + sf('len') + '([1, 2, 3]))\n\n' + sf('demo') + '()  ' + sc('# 3'),
+    guidance: ["LEGB: Local, Enclosing, Global, Built-in. len is built-in.", "Output: 3."] },
+  { id: 36, title: "Enclosing Scope", topic: "scope", difficulty: "medium",
+    desc: "Define outer() with x=10; define inner() that prints x. Call outer() which calls inner().",
+    code: sk('def') + ' ' + sf('outer') + '():\n  x = 10\n  ' + sk('def') + ' ' + sf('inner') + '():\n    ' + sf('print') + '(x)\n  ' + sf('inner') + '()\n\n' + sf('outer') + '()  ' + sc('# 10'),
+    guidance: ["inner looks up x; not local, so it uses enclosing (outer) scope.", "x is 10 in outer, so inner prints 10."] },
+  { id: 37, title: "Read Global Without global", topic: "scope", difficulty: "easy",
+    desc: "Global y = 5. Define get_y() that returns y (no assignment to y). Print get_y().",
+    code: 'y = 5\n\n' + sk('def') + ' ' + sf('get_y') + '():\n  ' + sk('return') + ' y\n\n' + sf('print') + '(' + sf('get_y') + '())  ' + sc('# 5'),
+    guidance: ["You can <strong>read</strong> a global without declaring global.", "Only need global when you <strong>assign</strong> to the name."] },
+
+  /* ─── Closures (5) ─── */
+  { id: 38, title: "Closure: make_adder", topic: "closures", difficulty: "medium",
+    desc: "Define make_adder(n) that returns a function adding n to its argument. make_adder(3)(4) → 7.",
+    code: sk('def') + ' ' + sf('make_adder') + '(n):\n  ' + sk('def') + ' adder(x):\n    ' + sk('return') + ' x + n\n  ' + sk('return') + ' adder\n\n' + sf('print') + '(make_adder(3)(4))  ' + sc('# 7'),
+    guidance: ["adder closes over n. make_adder(3) returns a function that adds 3.", "That function(4) returns 7."] },
+  { id: 39, title: "Closure: multiply_by", topic: "closures", difficulty: "medium",
+    desc: "Define multiply_by(k) that returns a function. The returned function multiplies its argument by k. multiply_by(5)(4) → 20.",
+    code: sk('def') + ' ' + sf('multiply_by') + '(k):\n  ' + sk('def') + ' inner(z):\n    ' + sk('return') + ' z * k\n  ' + sk('return') + ' inner\n\n' + sf('print') + '(multiply_by(5)(4))  ' + sc('# 20'),
+    guidance: ["inner closes over k. multiply_by(5) returns a function that multiplies by 5.", "That function(4) returns 20."] },
+  { id: 40, title: "Closure: Counter", topic: "closures", difficulty: "medium",
+    desc: "Define make_counter() that returns a function. Each call to the returned function increments and returns a count (start at 0). First call → 1, second → 2.",
+    code: sk('def') + ' ' + sf('make_counter') + '():\n  count = 0\n  ' + sk('def') + ' counter():\n    ' + sk('nonlocal') + ' count\n    count += 1\n    ' + sk('return') + ' count\n  ' + sk('return') + ' counter\n\nc = make_counter()\n' + sf('print') + '(c(), c())  ' + sc('# 1 2'),
+    guidance: ["counter closes over count. Use <code>nonlocal count</code> to rebind in enclosing scope.", "First c() → 1, second c() → 2."] },
+  { id: 41, title: "Closure: Greet Prefix", topic: "closures", difficulty: "easy",
+    desc: "Define make_greeter(prefix) that returns a function. The returned function takes a name and returns prefix + ' ' + name. make_greeter('Hi')('Ali') → 'Hi Ali'.",
+    code: sk('def') + ' ' + sf('make_greeter') + '(prefix):\n  ' + sk('def') + ' greet(name):\n    ' + sk('return') + ' prefix + ' + ss('" "') + ' + name\n  ' + sk('return') + ' greet\n\n' + sf('print') + '(make_greeter(' + ss('"Hi"') + ')(' + ss('"Ali"') + '))',
+    guidance: ["greet closes over prefix. make_greeter('Hi') returns a function that prepends 'Hi '.", "That function('Ali') returns 'Hi Ali'."] },
+  { id: 42, title: "Closure: Power", topic: "closures", difficulty: "medium",
+    desc: "Define make_power(exp) that returns a function. The returned function raises its argument to exp. make_power(2)(5) → 25.",
+    code: sk('def') + ' ' + sf('make_power') + '(exp):\n  ' + sk('def') + ' power(x):\n    ' + sk('return') + ' x ** exp\n  ' + sk('return') + ' power\n\n' + sf('print') + '(make_power(2)(5))  ' + sc('# 25'),
+    guidance: ["power closes over exp. make_power(2) returns a function that squares.", "That function(5) returns 25."] },
+
+  /* ─── Generator (5) ─── */
+  { id: 46, title: "Generator: yield", topic: "generator", difficulty: "medium",
+    desc: "Define a generator function count_to(n) that yields 1, 2, ..., n. Print list(count_to(3)).",
+    code: sk('def') + ' ' + sf('count_to') + '(n):\n  i = 1\n  ' + sk('while') + ' i <= n:\n    ' + sk('yield') + ' i\n    i += 1\n\n' + sf('print') + '(' + sf('list') + '(' + sf('count_to') + '(3)))  ' + sc('# [1, 2, 3]'),
+    guidance: ["Use <code>yield</code> instead of return; the function becomes a generator.", "list(count_to(3)) consumes the generator and gives [1, 2, 3]."] },
+  { id: 47, title: "Generator: next()", topic: "generator", difficulty: "medium",
+    desc: "Create a generator g = (x for x in range(3)). Call next(g) three times and print the values.",
+    code: 'g = (x ' + sk('for') + ' x ' + sk('in') + ' ' + sf('range') + '(3))\n' + sf('print') + '(' + sf('next') + '(g), ' + sf('next') + '(g), ' + sf('next') + '(g))  ' + sc('# 0 1 2'),
+    guidance: ["<code>(x for x in range(3))</code> is a generator expression.", "next(g) gets the next value; after 3 values the generator is exhausted."] },
+  { id: 48, title: "Generator: Infinite Sequence", topic: "generator", difficulty: "medium",
+    desc: "Define gen() that yields 0, 1, 2, ... forever. Get first 4 values with next() in a loop and print them.",
+    code: sk('def') + ' ' + sf('gen') + '():\n  n = 0\n  ' + sk('while') + ' True:\n    ' + sk('yield') + ' n\n    n += 1\n\ng = gen()\n' + sf('print') + '([next(g) ' + sk('for') + ' _ ' + sk('in') + ' ' + sf('range') + '(4)])  ' + sc('# [0,1,2,3]'),
+    guidance: ["Generators are lazy; they produce values on demand.", "next(g) in a loop gets 0, 1, 2, 3."] },
+  { id: 49, title: "Generator: for Loop", topic: "generator", difficulty: "easy",
+    desc: "Define a generator that yields 'a', 'b', 'c'. Iterate with for and collect into a list; print it.",
+    code: sk('def') + ' ' + sf('letters') + '():\n  ' + sk('yield') + ' ' + ss('"a"') + '\n  ' + sk('yield') + ' ' + ss('"b"') + '\n  ' + sk('yield') + ' ' + ss('"c"') + '\n\n' + sf('print') + '([x ' + sk('for') + ' x ' + sk('in') + ' ' + sf('letters') + '()])',
+    guidance: ["A generator can yield multiple values one by one.", "for x in letters() consumes the generator; list comp gives ['a','b','c']."] },
+  { id: 50, title: "Generator Expression", topic: "generator", difficulty: "easy",
+    desc: "Use a generator expression (x*2 for x in range(5)) and convert to list. Print the result.",
+    code: 'g = (x * 2 ' + sk('for') + ' x ' + sk('in') + ' ' + sf('range') + '(5))\n' + sf('print') + '(' + sf('list') + '(g))  ' + sc('# [0, 2, 4, 6, 8]'),
+    guidance: ["<code>(expr for x in iterable)</code> is a generator expression (parens, not brackets).", "list(g) consumes it: [0, 2, 4, 6, 8]."] },
+
+  /* ─── List comprehension (5) ─── */
+  { id: 51, title: "List Comp: Basic", topic: "list_comp", difficulty: "easy",
+    desc: "Build a list of squares for 1 to 5 using list comprehension: [x**2 for x in range(1,6)]. Print it.",
+    code: 'squares = [x ** 2 ' + sk('for') + ' x ' + sk('in') + ' ' + sf('range') + '(1, 6)]\n' + sf('print') + '(squares)  ' + sc('# [1, 4, 9, 16, 25]'),
+    guidance: ["<code>[expr for x in iterable]</code> builds a list.", "range(1, 6) is 1..5; x**2 gives squares."] },
+  { id: 52, title: "List Comp: With if", topic: "list_comp", difficulty: "easy",
+    desc: "Build a list of even numbers from 0 to 9: [x for x in range(10) if x%2==0]. Print it.",
+    code: 'evens = [x ' + sk('for') + ' x ' + sk('in') + ' ' + sf('range') + '(10) ' + sk('if') + ' x % 2 == 0]\n' + sf('print') + '(evens)  ' + sc('# [0, 2, 4, 6, 8]'),
+    guidance: ["Add <code>if condition</code> at the end to filter.", "Only x where x%2==0 are included."] },
+  { id: 53, title: "List Comp: From String", topic: "list_comp", difficulty: "easy",
+    desc: "Build a list of uppercase letters from 'hello': [c.upper() for c in 'hello']. Print it.",
+    code: 'upper_chars = [c.' + sf('upper') + '() ' + sk('for') + ' c ' + sk('in') + ' ' + ss('"hello"') + ']\n' + sf('print') + '(upper_chars)  ' + sc('# [H,E,L,L,O]'),
+    guidance: ["Iterate over a string; each <code>c</code> is a character.", "c.upper() gives uppercase; result ['H','E','L','L','O']."] },
+  { id: 54, title: "List Comp: Nested", topic: "list_comp", difficulty: "medium",
+    desc: "Build a 2x3 matrix as list of lists: [[i*j for j in range(1,4)] for i in range(1,3)]. Print it.",
+    code: 'matrix = [[i * j ' + sk('for') + ' j ' + sk('in') + ' ' + sf('range') + '(1, 4)] ' + sk('for') + ' i ' + sk('in') + ' ' + sf('range') + '(1, 3)]\n' + sf('print') + '(matrix)  ' + sc('# [[1,2,3], [2,4,6]]'),
+    guidance: ["Inner comp builds a row; outer comp builds rows.", "i=1: [1,2,3]; i=2: [2,4,6]."] },
+  { id: 55, title: "List Comp: With Else", topic: "list_comp", difficulty: "medium",
+    desc: "Build list: ['even' if n%2==0 else 'odd' for n in [1,2,3,4]]. Print it.",
+    code: 'labels = [' + ss('"even"') + ' ' + sk('if') + ' n % 2 == 0 ' + sk('else') + ' ' + ss('"odd"') + ' ' + sk('for') + ' n ' + sk('in') + ' [1, 2, 3, 4]]\n' + sf('print') + '(labels)  ' + sc('# [odd, even, odd, even]'),
+    guidance: ["<code>a if cond else b for x in ...</code> uses conditional expression per item.", "Result: ['odd','even','odd','even']."] },
+
+  /* ─── Tuple comprehension / tuple from iterable (5) ─── */
+  { id: 56, title: "Tuple from List Comp", topic: "tuple_comp", difficulty: "easy",
+    desc: "Build a tuple of doubles for 1..5: tuple([x*2 for x in range(1,6)]). Print it.",
+    code: 't = ' + sf('tuple') + '([x * 2 ' + sk('for') + ' x ' + sk('in') + ' ' + sf('range') + '(1, 6)])\n' + sf('print') + '(t)  ' + sc('# (2, 4, 6, 8, 10)'),
+    guidance: ["Python has no tuple comprehension syntax; use <code>tuple([...])</code> from a list comp.", "Or use tuple(generator_expression)."] },
+  { id: 57, title: "Tuple from Generator", topic: "tuple_comp", difficulty: "easy",
+    desc: "Build a tuple using a generator expression: tuple(x for x in range(5)). Print it.",
+    code: 't = ' + sf('tuple') + '(x ' + sk('for') + ' x ' + sk('in') + ' ' + sf('range') + '(5))\n' + sf('print') + '(t)  ' + sc('# (0, 1, 2, 3, 4)'),
+    guidance: ["<code>tuple(gen_expr)</code> consumes the generator and builds an immutable tuple.", "tuple(x for x in range(5)) → (0,1,2,3,4)."] },
+  { id: 58, title: "Tuple Comp: Squares", topic: "tuple_comp", difficulty: "easy",
+    desc: "Build tuple of squares of 1,2,3: tuple(x**2 for x in [1,2,3]). Print it.",
+    code: 'squares = ' + sf('tuple') + '(x ** 2 ' + sk('for') + ' x ' + sk('in') + ' [1, 2, 3])\n' + sf('print') + '(squares)  ' + sc('# (1, 4, 9)'),
+    guidance: ["Generator expression inside tuple(): (x**2 for x in [1,2,3]).", "Result: (1, 4, 9)."] },
+  { id: 59, title: "Tuple Comp: With if", topic: "tuple_comp", difficulty: "medium",
+    desc: "Build tuple of positive numbers from [-1, 2, -3, 4]: tuple(x for x in ... if x > 0). Print it.",
+    code: 't = ' + sf('tuple') + '(x ' + sk('for') + ' x ' + sk('in') + ' [-1, 2, -3, 4] ' + sk('if') + ' x > 0)\n' + sf('print') + '(t)  ' + sc('# (2, 4)'),
+    guidance: ["Filter in generator: <code>x for x in ... if x > 0</code>.", "Only 2 and 4 are positive."] },
+  { id: 60, title: "Tuple from String", topic: "tuple_comp", difficulty: "easy",
+    desc: "Build a tuple of characters from 'abc': tuple(c for c in 'abc'). Print it.",
+    code: 'chars = ' + sf('tuple') + '(c ' + sk('for') + ' c ' + sk('in') + ' ' + ss('"abc"') + ')\n' + sf('print') + '(chars)  ' + sc('# (a, b, c)'),
+    guidance: ["Iterate over string; tuple() collects the characters.", "Result: ('a', 'b', 'c')."] },
+
+  /* ─── Set comprehension (5) ─── */
+  { id: 61, title: "Set Comp: Basic", topic: "set_comp", difficulty: "easy",
+    desc: "Build a set of squares for 1..5: {x**2 for x in range(1,6)}. Print it (order may vary).",
+    code: 's = {x ** 2 ' + sk('for') + ' x ' + sk('in') + ' ' + sf('range') + '(1, 6)}\n' + sf('print') + '(s)  ' + sc('# {1, 4, 9, 16, 25}'),
+    guidance: ["<code>{expr for x in iterable}</code> is set comprehension; result has no duplicates.", "Sets are unordered."] },
+  { id: 62, title: "Set Comp: With if", topic: "set_comp", difficulty: "easy",
+    desc: "Build set of even numbers from 0 to 9: {x for x in range(10) if x%2==0}. Print it.",
+    code: 'evens = {x ' + sk('for') + ' x ' + sk('in') + ' ' + sf('range') + '(10) ' + sk('if') + ' x % 2 == 0}\n' + sf('print') + '(evens)  ' + sc('# {0, 2, 4, 6, 8}'),
+    guidance: ["Set comp with filter: only even x.", "Result: {0, 2, 4, 6, 8} (order not guaranteed)."] },
+  { id: 63, title: "Set Comp: From String", topic: "set_comp", difficulty: "easy",
+    desc: "Build set of unique characters in 'hello': {c for c in 'hello'}. Print it.",
+    code: 'unique = {c ' + sk('for') + ' c ' + sk('in') + ' ' + ss('"hello"') + '}\n' + sf('print') + '(unique)  ' + sc('# {h, e, l, o}'),
+    guidance: ["Set automatically removes duplicates.", "'hello' → {'h','e','l','o'} (4 unique chars)."] },
+  { id: 64, title: "Set Comp: Lengths", topic: "set_comp", difficulty: "easy",
+    desc: "Build set of lengths of words: {len(w) for w in ['a','hi','foo']}. Print it.",
+    code: 'lengths = {' + sf('len') + '(w) ' + sk('for') + ' w ' + sk('in') + ' [' + ss('"a"') + ', ' + ss('"hi"') + ', ' + ss('"foo"') + ']}\n' + sf('print') + '(lengths)  ' + sc('# {1, 2, 3}'),
+    guidance: ["Expression can be any expression; len(w) for each word.", "Result: {1, 2, 3}."] },
+  { id: 65, title: "Set Comp: Upper", topic: "set_comp", difficulty: "easy",
+    desc: "Build set of uppercase letters from 'abc': {c.upper() for c in 'abc'}. Print it.",
+    code: 'upper_set = {c.' + sf('upper') + '() ' + sk('for') + ' c ' + sk('in') + ' ' + ss('"abc"') + '}\n' + sf('print') + '(upper_set)  ' + sc('# {A, B, C}'),
+    guidance: ["Set of transformed elements.", "Result: {'A', 'B', 'C'}."] },
+
+  /* ─── Dict comprehension (5) ─── */
+  { id: 66, title: "Dict Comp: Basic", topic: "dict_comp", difficulty: "easy",
+    desc: "Build dict mapping 1..5 to their squares: {x: x**2 for x in range(1,6)}. Print it.",
+    code: 'd = {x: x ** 2 ' + sk('for') + ' x ' + sk('in') + ' ' + sf('range') + '(1, 6)}\n' + sf('print') + '(d)  ' + sc('# {1:1, 2:4, 3:9, 4:16, 5:25}'),
+    guidance: ["<code>{key_expr: value_expr for x in iterable}</code> builds a dict.", "x: x**2 gives 1→1, 2→4, ..."] },
+  { id: 67, title: "Dict Comp: From Two Lists", topic: "dict_comp", difficulty: "medium",
+    desc: "Build dict from keys ['a','b','c'] and values [1,2,3]: {k: v for k,v in zip(keys, values)}. Print it.",
+    code: 'keys = [' + ss('"a"') + ', ' + ss('"b"') + ', ' + ss('"c"') + ']\nvals = [1, 2, 3]\nd = {k: v ' + sk('for') + ' k, v ' + sk('in') + ' ' + sf('zip') + '(keys, vals)}\n' + sf('print') + '(d)',
+    guidance: ["zip(keys, vals) gives (a,1), (b,2), (c,3).", "Dict comp: {k: v for k,v in zip(...)} → {'a':1, 'b':2, 'c':3}."] },
+  { id: 68, title: "Dict Comp: With if", topic: "dict_comp", difficulty: "medium",
+    desc: "Build dict of even numbers only: {x: x*2 for x in range(10) if x%2==0}. Print it.",
+    code: 'd = {x: x * 2 ' + sk('for') + ' x ' + sk('in') + ' ' + sf('range') + '(10) ' + sk('if') + ' x % 2 == 0}\n' + sf('print') + '(d)  ' + sc('# {0:0, 2:4, 4:8, 6:12, 8:16}'),
+    guidance: ["Filter with if: only even x become keys.", "Result: {0:0, 2:4, 4:8, 6:12, 8:16}."] },
+  { id: 69, title: "Dict Comp: Swap Key-Value", topic: "dict_comp", difficulty: "medium",
+    desc: "Given d = {'a':1, 'b':2}, build reversed dict {v: k for k,v in d.items()}. Print it.",
+    code: 'd = {' + ss('"a"') + ': 1, ' + ss('"b"') + ': 2}\nrev = {v: k ' + sk('for') + ' k, v ' + sk('in') + ' d.' + sf('items') + '()}\n' + sf('print') + '(rev)  ' + sc('# {1:a, 2:b}'),
+    guidance: ["Iterate d.items(); use v as key and k as value.", "Result: {1:'a', 2:'b'}."] },
+  { id: 70, title: "Dict Comp: From String", topic: "dict_comp", difficulty: "easy",
+    desc: "Build dict mapping each character of 'ab' to its index: {c: i for i, c in enumerate('ab')}. Print it.",
+    code: 'd = {c: i ' + sk('for') + ' i, c ' + sk('in') + ' ' + sf('enumerate') + '(' + ss('"ab"') + ')}\n' + sf('print') + '(d)  ' + sc('# {a:0, b:1}'),
+    guidance: ["enumerate('ab') gives (0,'a'), (1,'b').", "Dict: {'a':0, 'b':1}."] }
+];
+
+/* ─────────────────────────────────────────────
+   CHAPTER 4 — OOPs (70)
+   class_basics: 10 | init_self: 8 | attributes: 6 | methods: 8 | inheritance: 10 | encapsulation: 5 | magic: 3 | polymorphism: 10 | abstraction: 10
+───────────────────────────────────────────── */
+var ch4 = [
+  /* ─── Class basics (10) ─── */
+  { id: 1, title: "Define a Class", topic: "class_basics", difficulty: "easy",
+    desc: "Define an empty class named Dog using the class keyword. Then create an instance: d = Dog().",
+    code: sk('class') + ' ' + sf('Dog') + ':\n  ' + sc('pass') + '\n\nd = ' + sf('Dog') + '()\n' + sf('print') + '(type(d))',
+    guidance: ["<code>class Dog:</code> defines a class; use <code>pass</code> for an empty body.", "Create an instance with <code>Dog()</code>."] },
+  { id: 2, title: "Create Instance", topic: "class_basics", difficulty: "easy",
+    desc: "Define class Person. Create two instances p1 = Person() and p2 = Person(). Print whether they are the same object (p1 is p2).",
+    code: sk('class') + ' Person: pass\np1 = Person()\np2 = Person()\n' + sf('print') + '(p1 ' + sk('is') + ' p2)  ' + sc('# False'),
+    guidance: ["Each call to Person() creates a new instance.", "p1 is p2 is False (different objects)."] },
+  { id: 3, title: "Class and type()", topic: "class_basics", difficulty: "easy",
+    desc: "Define class Cat. Create c = Cat() and print type(c). It should show <class '__main__.Cat'>.",
+    code: sk('class') + ' Cat: pass\nc = Cat()\n' + sf('print') + '(' + sf('type') + '(c))',
+    guidance: ["type(obj) returns the class of the object.", "type(c) is the Cat class."] },
+  { id: 4, title: "Dot Access", topic: "class_basics", difficulty: "easy",
+    desc: "Define class Box with no body (pass). After creating b = Box(), assign b.value = 10 and print b.value.",
+    code: sk('class') + ' Box: pass\nb = Box()\nb.value = 10\n' + sf('print') + '(b.value)  ' + sc('# 10'),
+    guidance: ["You can add attributes to an instance with dot notation: b.value = 10.", "Read with b.value."] },
+  { id: 5, title: "Multiple Instances", topic: "class_basics", difficulty: "easy",
+    desc: "Define class Counter. Create c1 and c2, set c1.n = 1 and c2.n = 2. Print c1.n and c2.n.",
+    code: sk('class') + ' Counter: pass\nc1 = Counter()\nc2 = Counter()\nc1.n = 1\nc2.n = 2\n' + sf('print') + '(c1.n, c2.n)  ' + sc('# 1 2'),
+    guidance: ["Each instance has its own attributes; c1.n and c2.n are independent."] },
+  { id: 6, title: "Class Name", topic: "class_basics", difficulty: "easy",
+    desc: "Define class Animal. Print Animal.__name__ (the class name as string).",
+    code: sk('class') + ' Animal: pass\n' + sf('print') + '(Animal.' + sb() + ')  ' + sc('# Animal'),
+    guidance: ["Classes have a __name__ attribute. Fill: <code>__name__</code>."] },
+  { id: 7, title: "Instance of Class", topic: "class_basics", difficulty: "easy",
+    desc: "Define class Vehicle. Create v = Vehicle(). Use isinstance(v, Vehicle) and print the result.",
+    code: sk('class') + ' Vehicle: pass\nv = Vehicle()\n' + sf('print') + '(' + sf('isinstance') + '(v, Vehicle))  ' + sc('# True'),
+    guidance: ["<code>isinstance(obj, Class)</code> returns True if obj is an instance of Class (or subclass)."] },
+  { id: 8, title: "Empty Class with pass", topic: "class_basics", difficulty: "easy",
+    desc: "In Python a class body cannot be empty. Use 'pass' as a placeholder. Define class Empty with pass and create e = Empty().",
+    code: sk('class') + ' Empty:\n  ' + sk('pass') + '\n\ne = Empty()\n' + sf('print') + '(e)',
+    guidance: ["<code>pass</code> is a no-op; it satisfies the syntax for an empty block."] },
+  { id: 9, title: "Assign Attribute After Creation", topic: "class_basics", difficulty: "easy",
+    desc: "Create a class Item. Create obj = Item(), then set obj.name = 'apple' and obj.price = 1.5. Print both.",
+    code: sk('class') + ' Item: pass\nobj = Item()\nobj.name = ' + ss('"apple"') + '\nobj.price = 1.5\n' + sf('print') + '(obj.name, obj.price)',
+    guidance: ["Instance attributes can be added anytime after creation."] },
+  { id: 10, title: "Class vs Instance", topic: "class_basics", difficulty: "easy",
+    desc: "Define class C. Create a = C() and b = C(). Print a == b (False; different instances) and type(a) == type(b) (True).",
+    code: sk('class') + ' C: pass\na = C()\nb = C()\n' + sf('print') + '(a == b, ' + sf('type') + '(a) == type(b))  ' + sc('# False True'),
+    guidance: ["a and b are different objects so a == b is False.", "type(a) and type(b) are both C, so type(a)==type(b) is True."] },
+
+  /* ─── __init__ and self (8) ─── */
+  { id: 11, title: "__init__ Basics", topic: "init_self", difficulty: "easy",
+    desc: "Define class Greeter with __init__(self, name) that sets self.name = name. Create g = Greeter('Ali') and print g.name.",
+    code: sk('class') + ' Greeter:\n  ' + sk('def') + ' __init__(self, name):\n    self.name = name\ng = Greeter(' + ss('"Ali"') + ')\n' + sf('print') + '(g.name)  ' + sc('# Ali'),
+    guidance: ["<code>__init__</code> is called when you create an instance; first parameter is <code>self</code>.", "Store arguments as self.attr."] },
+  { id: 12, title: "self Parameter", topic: "init_self", difficulty: "easy",
+    desc: "In a method, self refers to the instance. Define class Point with __init__(self, x, y) setting self.x and self.y. Create Point(3, 4) and print p.x, p.y.",
+    code: sk('class') + ' Point:\n  ' + sk('def') + ' __init__(self, x, y):\n    self.x = x\n    self.y = y\np = Point(3, 4)\n' + sf('print') + '(p.x, p.y)  ' + sc('# 3 4'),
+    guidance: ["Always list <code>self</code> first in instance methods.", "self.x = x assigns to the instance."] },
+  { id: 13, title: "__init__ with Default", topic: "init_self", difficulty: "easy",
+    desc: "Define class Counter with __init__(self, start=0) setting self.count = start. Create c = Counter() and c2 = Counter(10). Print c.count, c2.count.",
+    code: sk('class') + ' Counter:\n  ' + sk('def') + ' __init__(self, start=0):\n    self.count = start\nc = Counter()\nc2 = Counter(10)\n' + sf('print') + '(c.count, c2.count)  ' + sc('# 0 10'),
+    guidance: ["Default arguments work in __init__: start=0.", "Counter() uses 0; Counter(10) uses 10."] },
+  { id: 14, title: "Multiple Attributes in __init__", topic: "init_self", difficulty: "easy",
+    desc: "Define class Book with __init__(self, title, author). Set both on self. Create b = Book('Python', 'Guido') and print b.title, b.author.",
+    code: sk('class') + ' Book:\n  ' + sk('def') + ' __init__(self, title, author):\n    self.title = title\n    self.author = author\nb = Book(' + ss('"Python"') + ', ' + ss('"Guido"') + ')\n' + sf('print') + '(b.title, b.author)',
+    guidance: ["Assign each parameter to self.attr in __init__."] },
+  { id: 15, title: "__init__ No Return", topic: "init_self", difficulty: "easy",
+    desc: "__init__ should not return a value (other than None). Define class A with __init__(self) that only does pass. Create a = A().",
+    code: sk('class') + ' A:\n  ' + sk('def') + ' __init__(self):\n    ' + sk('pass') + '\n\na = A()\n' + sf('print') + '(a)',
+    guidance: ["__init__ is called for side effects (setting attributes). Returning something else can break instance creation."] },
+  { id: 16, title: "self in __init__", topic: "init_self", difficulty: "easy",
+    desc: "Define class Dog with __init__(self, name). Set self.name = name. Create d = Dog('Rex') and print d.name.",
+    code: sk('class') + ' Dog:\n  ' + sk('def') + ' __init__(self, name):\n    self.name = ' + sb() + '\nd = Dog(' + ss('"Rex"') + ')\n' + sf('print') + '(d.name)  ' + sc('# Rex'),
+    guidance: ["Use the parameter name: self.name = name. Fill: <code>name</code>."] },
+  { id: 17, title: "Optional __init__ Arg", topic: "init_self", difficulty: "medium",
+    desc: "Define class Config with __init__(self, env='dev'). Set self.env = env. Create Config() and Config('prod'); print both .env.",
+    code: sk('class') + ' Config:\n  ' + sk('def') + ' __init__(self, env=' + ss('"dev"') + '):\n    self.env = env\nc1 = Config()\nc2 = Config(' + ss('"prod"') + ')\n' + sf('print') + '(c1.env, c2.env)  ' + sc('# dev prod'),
+    guidance: ["Default env='dev'; Config() gives dev, Config('prod') gives prod."] },
+  { id: 18, title: "__init__ and Validation", topic: "init_self", difficulty: "medium",
+    desc: "Define class Age with __init__(self, n). Set self.years = n only if n >= 0 else 0. Create Age(25) and Age(-1); print .years.",
+    code: sk('class') + ' Age:\n  ' + sk('def') + ' __init__(self, n):\n    self.years = n ' + sk('if') + ' n >= 0 ' + sk('else') + ' 0\na = Age(25)\nb = Age(-1)\n' + sf('print') + '(a.years, b.years)  ' + sc('# 25 0'),
+    guidance: ["Use a conditional in __init__ to validate: self.years = n if n >= 0 else 0."] },
+
+  /* ─── Attributes (6) ─── */
+  { id: 19, title: "Instance vs Class Attribute", topic: "attributes", difficulty: "medium",
+    desc: "Define class C with class attribute kind = 'C' and __init__(self, x) setting self.x = x. Create c = C(1). Print c.x and C.kind.",
+    code: sk('class') + ' C:\n  kind = ' + ss('"C"') + '\n  ' + sk('def') + ' __init__(self, x): self.x = x\nc = C(1)\n' + sf('print') + '(c.x, C.kind)  ' + sc('# 1 C'),
+    guidance: ["Attributes defined on the class are shared; those set in __init__ on self are per-instance."] },
+  { id: 20, title: "Class Attribute Access", topic: "attributes", difficulty: "easy",
+    desc: "Define class Animal with class attribute species = 'unknown'. Print Animal.species. Create a = Animal() and print a.species (same value).",
+    code: sk('class') + ' Animal:\n  species = ' + ss('"unknown"') + '\n' + sf('print') + '(Animal.species)\na = Animal()\n' + sf('print') + '(a.species)',
+    guidance: ["Instance can read class attribute: a.species looks up to Animal.species if not on a."] },
+  { id: 21, title: "Shadowing Class Attr", topic: "attributes", difficulty: "medium",
+    desc: "Class C has count = 0. In __init__ set self.count = 1. Create c = C(). Print c.count (1) and C.count (0).",
+    code: sk('class') + ' C:\n  count = 0\n  ' + sk('def') + ' __init__(self): self.count = 1\nc = C()\n' + sf('print') + '(c.count, C.count)  ' + sc('# 1 0'),
+    guidance: ["Assigning self.count creates an instance attribute that shadows the class attribute for that instance."] },
+  { id: 22, title: "Default Mutable Warning", topic: "attributes", difficulty: "hard",
+    desc: "Avoid using mutable default in __init__: def __init__(self, items=None): self.items = items if items is not None else []. Create two instances and append to one; other stays empty.",
+    code: sk('class') + ' Bag:\n  ' + sk('def') + ' __init__(self, items=None):\n    self.items = items ' + sk('if') + ' items ' + sk('is') + ' ' + sk('not') + ' None ' + sk('else') + ' []\nb1 = Bag()\nb2 = Bag()\nb1.items.append(1)\n' + sf('print') + '(b1.items, b2.items)  ' + sc('# [1] []'),
+    guidance: ["Using def __init__(self, items=[]): would share one list. Use None and assign [] instead."] },
+  { id: 23, title: "hasattr and getattr", topic: "attributes", difficulty: "medium",
+    desc: "Create class C with self.x = 5. Use hasattr(c, 'x') and getattr(c, 'x'). Print both.",
+    code: sk('class') + ' C:\n  ' + sk('def') + ' __init__(self): self.x = 5\nc = C()\n' + sf('print') + '(' + sf('hasattr') + '(c, ' + ss('"x"') + '), ' + sf('getattr') + '(c, ' + ss('"x"') + '))  ' + sc('# True 5'),
+    guidance: ["hasattr(obj, 'name') checks if attribute exists; getattr(obj, 'name') gets value."] },
+  { id: 24, title: "setattr", topic: "attributes", difficulty: "medium",
+    desc: "Define class Empty with pass. Create e = Empty(), then setattr(e, 'value', 42) and print e.value.",
+    code: sk('class') + ' Empty: pass\ne = Empty()\n' + sf('setattr') + '(e, ' + ss('"value"') + ', 42)\n' + sf('print') + '(e.value)  ' + sc('# 42'),
+    guidance: ["setattr(obj, 'name', value) is like obj.name = value when the name is in a variable."] },
+
+  /* ─── Methods (8) ─── */
+  { id: 25, title: "Instance Method", topic: "methods", difficulty: "easy",
+    desc: "Define class Greeter with def greet(self): return 'Hello'. Create g = Greeter() and print g.greet().",
+    code: sk('class') + ' Greeter:\n  ' + sk('def') + ' greet(self): ' + sk('return') + ' ' + ss('"Hello"') + '\ng = Greeter()\n' + sf('print') + '(g.greet())  ' + sc('# Hello'),
+    guidance: ["Instance methods take <code>self</code> as first parameter. Call with obj.method()."] },
+  { id: 26, title: "Method Using self", topic: "methods", difficulty: "easy",
+    desc: "Define class Adder with __init__(self, n) and method add(self, x) returning self.n + x. Create a = Adder(10), print a.add(5).",
+    code: sk('class') + ' Adder:\n  ' + sk('def') + ' __init__(self, n): self.n = n\n  ' + sk('def') + ' add(self, x): ' + sk('return') + ' self.n + x\na = Adder(10)\n' + sf('print') + '(a.add(5))  ' + sc('# 15'),
+    guidance: ["Methods can read self.n and other instance attributes."] },
+  { id: 27, title: "@classmethod", topic: "methods", difficulty: "medium",
+    desc: "Define class C with @classmethod def get_name(cls): return cls.__name__. Create C and print C.get_name().",
+    code: sk('class') + ' C:\n  @' + sf('classmethod') + '\n  ' + sk('def') + ' get_name(cls): ' + sk('return') + ' cls.__name__\n' + sf('print') + '(C.get_name())  ' + sc('# C'),
+    guidance: ["@classmethod receives <code>cls</code> (the class) as first argument. Call as C.get_name()."] },
+  { id: 28, title: "@staticmethod", topic: "methods", difficulty: "medium",
+    desc: "Define class Math with @staticmethod def square(x): return x*x. Print Math.square(5).",
+    code: sk('class') + ' Math:\n  @' + sf('staticmethod') + '\n  ' + sk('def') + ' square(x): ' + sk('return') + ' x * x\n' + sf('print') + '(Math.square(5))  ' + sc('# 25'),
+    guidance: ["@staticmethod has no self or cls; it is just a function in the class namespace."] },
+  { id: 29, title: "classmethod from Instance", topic: "methods", difficulty: "easy",
+    desc: "Class C has @classmethod def info(cls): return cls.__name__. Create c = C(). Call c.info() and print (works; cls is C).",
+    code: sk('class') + ' C:\n  @classmethod\n  ' + sk('def') + ' info(cls): ' + sk('return') + ' cls.__name__\nc = C()\n' + sf('print') + '(c.info())  ' + sc('# C'),
+    guidance: ["Calling c.info() still passes C as cls; classmethods work from instances too."] },
+  { id: 30, title: "Method Calling Method", topic: "methods", difficulty: "medium",
+    desc: "Define class Calc with add(self, a, b) returning a+b and double_add(self, a, b) returning self.add(a,b)*2. Create c = Calc(), print c.double_add(1, 2).",
+    code: sk('class') + ' Calc:\n  ' + sk('def') + ' add(self, a, b): ' + sk('return') + ' a + b\n  ' + sk('def') + ' double_add(self, a, b): ' + sk('return') + ' self.add(a, b) * 2\nc = Calc()\n' + sf('print') + '(c.double_add(1, 2))  ' + sc('# 6'),
+    guidance: ["Use self.add(a, b) to call another method from the same class."] },
+  { id: 31, title: "staticmethod No self", topic: "methods", difficulty: "easy",
+    desc: "Define class Utils with @staticmethod def is_even(n): return n % 2 == 0. Print Utils.is_even(4) and Utils.is_even(5).",
+    code: sk('class') + ' Utils:\n  @staticmethod\n  ' + sk('def') + ' is_even(n): ' + sk('return') + ' n % 2 == 0\n' + sf('print') + '(Utils.is_even(4), Utils.is_even(5))  ' + sc('# True False'),
+    guidance: ["Static methods don't receive self; they're like module-level functions grouped in the class."] },
+  { id: 32, title: "Factory classmethod", topic: "methods", difficulty: "medium",
+    desc: "Define class Point with __init__(self, x, y) and @classmethod from_tuple(cls, t): return cls(t[0], t[1]). Create p = Point.from_tuple((2, 3)); print p.x, p.y.",
+    code: sk('class') + ' Point:\n  ' + sk('def') + ' __init__(self, x, y): self.x, self.y = x, y\n  @classmethod\n  ' + sk('def') + ' from_tuple(cls, t): ' + sk('return') + ' cls(t[0], t[1])\np = Point.from_tuple((2, 3))\n' + sf('print') + '(p.x, p.y)  ' + sc('# 2 3'),
+    guidance: ["from_tuple is an alternative constructor; cls(t[0], t[1]) creates a new instance."] },
+
+  /* ─── Inheritance (10) ─── */
+  { id: 33, title: "Simple Inheritance", topic: "inheritance", difficulty: "easy",
+    desc: "Define class Animal with pass. Define class Dog(Animal) with pass. Create d = Dog(). Print isinstance(d, Dog) and isinstance(d, Animal).",
+    code: sk('class') + ' Animal: pass\n' + sk('class') + ' Dog(Animal): pass\nd = Dog()\n' + sf('print') + '(' + sf('isinstance') + '(d, Dog), isinstance(d, Animal))  ' + sc('# True True'),
+    guidance: ["Dog(Animal) means Dog inherits from Animal. d is instance of both Dog and Animal."] },
+  { id: 34, title: "Override Method", topic: "inheritance", difficulty: "easy",
+    desc: "Class Animal has def speak(self): return '?'. Class Dog(Animal) overrides with return 'woof'. Create d = Dog(), print d.speak().",
+    code: sk('class') + ' Animal:\n  ' + sk('def') + ' speak(self): ' + sk('return') + ' ' + ss('"?"') + '\n' + sk('class') + ' Dog(Animal):\n  ' + sk('def') + ' speak(self): ' + sk('return') + ' ' + ss('"woof"') + '\nd = Dog()\n' + sf('print') + '(d.speak())  ' + sc('# woof'),
+    guidance: ["Subclass can redefine a method; Dog.speak overrides Animal.speak."] },
+  { id: 35, title: "super() Call Parent", topic: "inheritance", difficulty: "medium",
+    desc: "Class A has greet(self): return 'A'. Class B(A) has greet(self): return super().greet() + 'B'. Create b = B(), print b.greet().",
+    code: sk('class') + ' A:\n  ' + sk('def') + ' greet(self): ' + sk('return') + ' ' + ss('"A"') + '\n' + sk('class') + ' B(A):\n  ' + sk('def') + ' greet(self): ' + sk('return') + ' super().greet() + ' + ss('"B"') + '\nb = B()\n' + sf('print') + '(b.greet())  ' + sc('# AB'),
+    guidance: ["super().greet() calls the parent's greet(); then add 'B'."] },
+  { id: 36, title: "super() in __init__", topic: "inheritance", difficulty: "medium",
+    desc: "Class Person has __init__(self, name): self.name = name. Class Employee(Person) has __init__(self, name, id): super().__init__(name); self.id = id. Create e = Employee('Jo', 1); print e.name, e.id.",
+    code: sk('class') + ' Person:\n  ' + sk('def') + ' __init__(self, name): self.name = name\n' + sk('class') + ' Employee(Person):\n  ' + sk('def') + ' __init__(self, name, id):\n    super().__init__(name)\n    self.id = id\ne = Employee(' + ss('"Jo"') + ', 1)\n' + sf('print') + '(e.name, e.id)  ' + sc('# Jo 1'),
+    guidance: ["Call super().__init__(name) first so self.name is set; then set self.id."] },
+  { id: 37, title: "Inherited Attribute", topic: "inheritance", difficulty: "easy",
+    desc: "Class A has __init__(self): self.x = 1. Class B(A) has pass. Create b = B(). B has no __init__ so A's is used. Print b.x.",
+    code: sk('class') + ' A:\n  ' + sk('def') + ' __init__(self): self.x = 1\n' + sk('class') + ' B(A): pass\nb = B()\n' + sf('print') + '(b.x)  ' + sc('# 1'),
+    guidance: ["B() calls A.__init__ (inherited); so b.x is set to 1."] },
+  { id: 38, title: "issubclass", topic: "inheritance", difficulty: "easy",
+    desc: "Define class Base and class Derived(Base). Print issubclass(Derived, Base) and issubclass(Base, Derived).",
+    code: sk('class') + ' Base: pass\n' + sk('class') + ' Derived(Base): pass\n' + sf('print') + '(' + sf('issubclass') + '(Derived, Base), issubclass(Base, Derived))  ' + sc('# True False'),
+    guidance: ["issubclass(Derived, Base) is True; Base is not a subclass of Derived."] },
+  { id: 39, title: "Multiple Inheritance Intro", topic: "inheritance", difficulty: "medium",
+    desc: "Define class A: pass and class B: pass. Define class C(A, B): pass. Create c = C(). Print C.__bases__ (tuple of base classes).",
+    code: sk('class') + ' A: pass\n' + sk('class') + ' B: pass\n' + sk('class') + ' C(A, B): pass\nc = C()\n' + sf('print') + '(C.__bases__)  ' + sc('# (A, B)'),
+    guidance: ["class C(A, B): inherits from both. __bases__ gives (A, B)."] },
+  { id: 40, title: "Override and Extend", topic: "inheritance", difficulty: "medium",
+    desc: "Class A has run(self): return 1. Class B(A) has run(self): return super().run() + 2. Create B(), print b.run().",
+    code: sk('class') + ' A:\n  ' + sk('def') + ' run(self): ' + sk('return') + ' 1\n' + sk('class') + ' B(A):\n  ' + sk('def') + ' run(self): ' + sk('return') + ' super().run() + 2\nb = B()\n' + sf('print') + '(b.run())  ' + sc('# 3'),
+    guidance: ["super().run() returns 1; add 2 gives 3."] },
+  { id: 41, title: "Child Without __init__", topic: "inheritance", difficulty: "easy",
+    desc: "Class Parent has __init__(self, x): self.x = x. Class Child(Parent): pass. Create c = Child(5). Parent's __init__ is used. Print c.x.",
+    code: sk('class') + ' Parent:\n  ' + sk('def') + ' __init__(self, x): self.x = x\n' + sk('class') + ' Child(Parent): pass\nc = Child(5)\n' + sf('print') + '(c.x)  ' + sc('# 5'),
+    guidance: ["Child has no __init__, so Parent.__init__ is called when Child(5) is used."] },
+  { id: 42, title: "Override __init__ with super", topic: "inheritance", difficulty: "medium",
+    desc: "Class Animal has __init__(self, name): self.name = name. Class Dog(Animal) has __init__(self, name, breed): super().__init__(name); self.breed = breed. Create Dog('Rex', 'Lab'); print name and breed.",
+    code: sk('class') + ' Animal:\n  ' + sk('def') + ' __init__(self, name): self.name = name\n' + sk('class') + ' Dog(Animal):\n  ' + sk('def') + ' __init__(self, name, breed):\n    super().__init__(name)\n    self.breed = breed\nd = Dog(' + ss('"Rex"') + ', ' + ss('"Lab"') + ')\n' + sf('print') + '(d.name, d.breed)  ' + sc('# Rex Lab'),
+    guidance: ["Always call super().__init__(name) in Dog before setting Dog-specific attributes."] },
+
+  /* ─── Encapsulation (5) ─── */
+  { id: 43, title: "Private Convention _name", topic: "encapsulation", difficulty: "medium",
+    desc: "By convention, a single leading underscore _ means 'internal'. Define class C with __init__(self): self._x = 1. Create c = C(), print c._x (still accessible).",
+    code: sk('class') + ' C:\n  ' + sk('def') + ' __init__(self): self._x = 1\nc = C()\n' + sf('print') + '(c._x)  ' + sc('# 1'),
+    guidance: ["_x is a hint to developers; Python does not enforce it. It is still readable and writable."] },
+  { id: 44, title: "Name Mangling __name", topic: "encapsulation", difficulty: "medium",
+    desc: "Double underscore __ triggers name mangling: __x becomes _C__x inside class C. Define class C with self.__val = 10. Access via c._C__val or define a getter.",
+    code: sk('class') + ' C:\n  ' + sk('def') + ' __init__(self): self.__val = 10\n  ' + sk('def') + ' get_val(self): ' + sk('return') + ' self.__val\nc = C()\n' + sf('print') + '(c.get_val())  ' + sc('# 10'),
+    guidance: ["__val is mangled to _C__val. Use a method get_val() to expose it."] },
+  { id: 45, title: "@property Getter", topic: "encapsulation", difficulty: "medium",
+    desc: "Define class Circle with __init__(self, r): self._r = r and @property def radius(self): return self._r. Create c = Circle(5); print c.radius (no parentheses).",
+    code: sk('class') + ' Circle:\n  ' + sk('def') + ' __init__(self, r): self._r = r\n  @property\n  ' + sk('def') + ' radius(self): ' + sk('return') + ' self._r\nc = Circle(5)\n' + sf('print') + '(c.radius)  ' + sc('# 5'),
+    guidance: ["@property makes radius() callable as an attribute: c.radius, not c.radius()."] },
+  { id: 46, title: "Property Setter", topic: "encapsulation", difficulty: "hard",
+    desc: "Class C has _x = 0, @property def x(self): return self._x, @x.setter def x(self, v): self._x = max(0, v). Create c = C(); c.x = 5; c.x = -1; print c.x.",
+    code: sk('class') + ' C:\n  _x = 0\n  @property\n  ' + sk('def') + ' x(self): ' + sk('return') + ' self._x\n  @x.setter\n  ' + sk('def') + ' x(self, v): self._x = max(0, v)\nc = C()\nc.x = 5\nc.x = -1\n' + sf('print') + '(c.x)  ' + sc('# 0'),
+    guidance: ["Setter ensures _x is never negative; c.x = -1 stores 0 via max(0, v)."] },
+  { id: 47, title: "Read-Only Property", topic: "encapsulation", difficulty: "medium",
+    desc: "Define class ReadOnly with __init__(self, v): self._v = v and @property def value(self): return self._v (no setter). Create r = ReadOnly(42); print r.value. Assigning r.value = 0 would raise AttributeError.",
+    code: sk('class') + ' ReadOnly:\n  ' + sk('def') + ' __init__(self, v): self._v = v\n  @property\n  ' + sk('def') + ' value(self): ' + sk('return') + ' self._v\nr = ReadOnly(42)\n' + sf('print') + '(r.value)  ' + sc('# 42'),
+    guidance: ["Property without setter is read-only; r.value = 0 would error."] },
+
+  /* ─── Magic methods (3) ─── */
+  { id: 48, title: "__str__", topic: "magic", difficulty: "medium",
+    desc: "Define class Person with __init__(self, name) and __str__(self): return self.name. Create p = Person('Ali'). print(p) uses __str__; print str(p).",
+    code: sk('class') + ' Person:\n  ' + sk('def') + ' __init__(self, name): self.name = name\n  ' + sk('def') + ' __str__(self): ' + sk('return') + ' self.name\np = Person(' + ss('"Ali"') + ')\n' + sf('print') + '(p)  ' + sc('# Ali'),
+    guidance: ["__str__ is used by print() and str(); return a human-readable string."] },
+  { id: 49, title: "__repr__", topic: "magic", difficulty: "medium",
+    desc: "Define class Point with __init__(self, x, y) and __repr__(self): return 'Point(%s, %s)' % (self.x, self.y). Create Point(1, 2); repr(p) or echo in REPL uses __repr__.",
+    code: sk('class') + ' Point:\n  ' + sk('def') + ' __init__(self, x, y): self.x, self.y = x, y\n  ' + sk('def') + ' __repr__(self): ' + sk('return') + ' ' + ss('"Point(%s, %s)"') + ' % (self.x, self.y)\np = Point(1, 2)\n' + sf('print') + '(repr(p))  ' + sc('# Point(1, 2)'),
+    guidance: ["__repr__ should be unambiguous; often like constructor call. Used by repr() and REPL."] },
+  { id: 50, title: "__eq__", topic: "magic", difficulty: "medium",
+    desc: "Define class Box with __init__(self, v) and __eq__(self, other): return isinstance(other, Box) and self.v == other.v. Create Box(1) and Box(1); print Box(1) == Box(1).",
+    code: sk('class') + ' Box:\n  ' + sk('def') + ' __init__(self, v): self.v = v\n  ' + sk('def') + ' __eq__(self, other): ' + sk('return') + ' ' + sf('isinstance') + '(other, Box) and self.v == other.v\n' + sf('print') + '(Box(1) == Box(1))  ' + sc('# True'),
+    guidance: ["__eq__ defines ==. Check type with isinstance; then compare attributes."] },
+
+  /* ─── Polymorphism (10): scratch to advance ─── */
+  { id: 51, title: "Same Method Name, Different Classes", topic: "polymorphism", difficulty: "easy",
+    desc: "Define class Dog with speak(self): return 'woof'. Define class Cat with speak(self): return 'meow'. Create d = Dog(), c = Cat(); print d.speak(), c.speak().",
+    code: sk('class') + ' Dog:\n  ' + sk('def') + ' speak(self): ' + sk('return') + ' ' + ss('"woof"') + '\n' + sk('class') + ' Cat:\n  ' + sk('def') + ' speak(self): ' + sk('return') + ' ' + ss('"meow"') + '\nd, c = Dog(), Cat()\n' + sf('print') + '(d.speak(), c.speak())  ' + sc('# woof meow'),
+    guidance: ["Polymorphism: same method name <code>speak</code>, different behavior per class."] },
+  { id: 52, title: "Loop Over Different Types", topic: "polymorphism", difficulty: "easy",
+    desc: "Dog and Cat both have speak(). Put instances in a list: [Dog(), Cat()]. Loop and print each .speak().",
+    code: sk('class') + ' Dog:\n  ' + sk('def') + ' speak(self): return ' + ss('"woof"') + '\n' + sk('class') + ' Cat:\n  ' + sk('def') + ' speak(self): return ' + ss('"meow"') + '\nfor obj in [Dog(), Cat()]:\n  ' + sf('print') + '(obj.speak())  ' + sc('# woof then meow'),
+    guidance: ["One loop, one call obj.speak(); each object responds with its own implementation."] },
+  { id: 53, title: "Polymorphic Function", topic: "polymorphism", difficulty: "easy",
+    desc: "Write def make_sound(animal): return animal.speak(). Call with Dog() and Cat(); print both results.",
+    code: sk('class') + ' Dog:\n  ' + sk('def') + ' speak(self): return ' + ss('"woof"') + '\n' + sk('class') + ' Cat:\n  ' + sk('def') + ' speak(self): return ' + ss('"meow"') + '\n' + sk('def') + ' make_sound(animal): ' + sk('return') + ' animal.speak()\n' + sf('print') + '(make_sound(Dog()), make_sound(Cat()))  ' + sc('# woof meow'),
+    guidance: ["make_sound doesn't care about the concrete type; it only needs .speak()."] },
+  { id: 54, title: "Override and Call Same Name", topic: "polymorphism", difficulty: "medium",
+    desc: "Class Animal has speak(self): return '?'. Dog(Animal) overrides with 'woof'. Create a = Dog(); print a.speak() (uses Dog's version).",
+    code: sk('class') + ' Animal:\n  ' + sk('def') + ' speak(self): return ' + ss('"?"') + '\n' + sk('class') + ' Dog(Animal):\n  ' + sk('def') + ' speak(self): return ' + ss('"woof"') + '\na = Dog()\n' + sf('print') + '(a.speak())  ' + sc('# woof'),
+    guidance: ["Variable a is a Dog; a.speak() resolves to Dog.speak (override)."] },
+  { id: 55, title: "Duck Typing", topic: "polymorphism", difficulty: "medium",
+    desc: "Duck typing: if it has .quack(), use it. Define class Duck with quack(self): return 'quack'. Define class Person with quack(self): return 'fake quack'. Write def say_it(x): return x.quack(). Call with Duck() and Person().",
+    code: sk('class') + ' Duck:\n  ' + sk('def') + ' quack(self): return ' + ss('"quack"') + '\n' + sk('class') + ' Person:\n  ' + sk('def') + ' quack(self): return ' + ss('"fake quack"') + '\n' + sk('def') + ' say_it(x): return x.quack()\n' + sf('print') + '(say_it(Duck()), say_it(Person()))  ' + sc('# quack fake quack'),
+    guidance: ["No common base class; Python uses duck typing: same method name, different classes."] },
+  { id: 56, title: "Operator Overloading __add__", topic: "polymorphism", difficulty: "medium",
+    desc: "Define class Vector with __init__(self, x, y) and __add__(self, other): return Vector(self.x + other.x, self.y + other.y). Create v1 = Vector(1,0), v2 = Vector(0,1); print (v1+v2).x, (v1+v2).y.",
+    code: sk('class') + ' Vector:\n  ' + sk('def') + ' __init__(self, x, y): self.x, self.y = x, y\n  ' + sk('def') + ' __add__(self, other): ' + sk('return') + ' Vector(self.x + other.x, self.y + other.y)\nv1, v2 = Vector(1, 0), Vector(0, 1)\nv = v1 + v2\n' + sf('print') + '(v.x, v.y)  ' + sc('# 1 1'),
+    guidance: ["__add__ is called for +; return a new Vector. Polymorphism: + means different things for int vs Vector."] },
+  { id: 57, title: "Polymorphism with len()", topic: "polymorphism", difficulty: "medium",
+    desc: "Define class MyList with __init__(self, data): self.data = data and __len__(self): return len(self.data). Create m = MyList([1,2,3]); print len(m).",
+    code: sk('class') + ' MyList:\n  ' + sk('def') + ' __init__(self, data): self.data = data\n  ' + sk('def') + ' __len__(self): ' + sk('return') + ' ' + sf('len') + '(self.data)\nm = MyList([1, 2, 3])\n' + sf('print') + '(' + sf('len') + '(m))  ' + sc('# 3'),
+    guidance: ["Built-in len() calls __len__; your class can plug into the same interface."] },
+  { id: 58, title: "Common Interface", topic: "polymorphism", difficulty: "medium",
+    desc: "Define abstract interface: class Shape with area(self): pass. Rectangle(Shape) and Circle(Shape) override area(). Put [Rectangle(2,3), Circle(1)] in list; loop and print each .area().",
+    code: sk('class') + ' Shape:\n  ' + sk('def') + ' area(self): ' + sk('pass') + '\n' + sk('class') + ' Rectangle(Shape):\n  ' + sk('def') + ' __init__(self, w, h): self.w, self.h = w, h\n  ' + sk('def') + ' area(self): return self.w * self.h\n' + sk('class') + ' Circle(Shape):\n  ' + sk('def') + ' __init__(self, r): self.r = r\n  ' + sk('def') + ' area(self): return 3.14 * self.r * self.r\nfor s in [Rectangle(2,3), Circle(1)]: ' + sf('print') + '(s.area())',
+    guidance: ["Same .area() call; Rectangle and Circle behave differently (polymorphism)."] },
+  { id: 59, title: "Method Resolution Order", topic: "polymorphism", difficulty: "hard",
+    desc: "Class A: def go(self): return 'A'. Class B(A): def go(self): return 'B'. Class C(A): def go(self): return 'C'. Class D(B, C): pass. Create d = D(); print d.go(). Which parent wins? (MRO: D, B, C, A)",
+    code: sk('class') + ' A:\n  ' + sk('def') + ' go(self): return ' + ss('"A"') + '\n' + sk('class') + ' B(A):\n  ' + sk('def') + ' go(self): return ' + ss('"B"') + '\n' + sk('class') + ' C(A):\n  ' + sk('def') + ' go(self): return ' + ss('"C"') + '\n' + sk('class') + ' D(B, C): pass\nd = D()\n' + sf('print') + '(d.go())  ' + sc('# B'),
+    guidance: ["MRO: D -> B -> C -> A. First definition of go is in B, so d.go() returns 'B'."] },
+  { id: 60, title: "Polymorphic __getitem__", topic: "polymorphism", difficulty: "hard",
+    desc: "Define class Seq with __init__(self, data): self.data = data and __getitem__(self, i): return self.data[i]. Create s = Seq([10,20,30]); print s[1]. Now s[1] works like a list.",
+    code: sk('class') + ' Seq:\n  ' + sk('def') + ' __init__(self, data): self.data = data\n  ' + sk('def') + ' __getitem__(self, i): ' + sk('return') + ' self.data[i]\ns = Seq([10, 20, 30])\n' + sf('print') + '(s[1])  ' + sc('# 20'),
+    guidance: ["__getitem__ makes obj[i] work; same interface as list indexing (polymorphism)."] },
+
+  /* ─── Abstraction (10): scratch to advance ─── */
+  { id: 61, title: "Abstract Idea: Base with pass", topic: "abstraction", difficulty: "easy",
+    desc: "Define class Animal with def speak(self): pass (no implementation). Subclass Dog(Animal) with speak(self): return 'woof'. Create d = Dog(); print d.speak().",
+    code: sk('class') + ' Animal:\n  ' + sk('def') + ' speak(self): ' + sk('pass') + '\n' + sk('class') + ' Dog(Animal):\n  ' + sk('def') + ' speak(self): return ' + ss('"woof"') + '\nd = Dog()\n' + sf('print') + '(d.speak())  ' + sc('# woof'),
+    guidance: ["Animal.speak does nothing; subclasses provide real implementation. Base is 'abstract' in idea."] },
+  { id: 62, title: "ABC: Import and Inherit", topic: "abstraction", difficulty: "easy",
+    desc: "from abc import ABC, abstractmethod. Define class Shape(ABC) with @abstractmethod def area(self): pass. Subclass Rectangle(Shape) with area(self): return 10. Create r = Rectangle(); print r.area().",
+    code: 'from abc import ABC, abstractmethod\n' + sk('class') + ' Shape(ABC):\n  @abstractmethod\n  ' + sk('def') + ' area(self): ' + sk('pass') + '\n' + sk('class') + ' Rectangle(Shape):\n  ' + sk('def') + ' area(self): return 10\nr = Rectangle()\n' + sf('print') + '(r.area())  ' + sc('# 10'),
+    guidance: ["ABC = Abstract Base Class. You cannot instantiate Shape(); only concrete subclasses like Rectangle."] },
+  { id: 63, title: "Cannot Instantiate ABC", topic: "abstraction", difficulty: "medium",
+    desc: "Class Shape(ABC) has @abstractmethod def area(self): pass. Try shape = Shape() — it raises TypeError. Only concrete subclasses that implement area() can be instantiated.",
+    code: 'from abc import ABC, abstractmethod\n' + sk('class') + ' Shape(ABC):\n  @abstractmethod\n  ' + sk('def') + ' area(self): pass\n' + sc('# Shape()  TypeError: Can\'t instantiate abstract class'),
+    guidance: ["Abstract methods force subclasses to implement them; Shape() is forbidden."] },
+  { id: 64, title: "Multiple Abstract Methods", topic: "abstraction", difficulty: "medium",
+    desc: "Define class Worker(ABC) with @abstractmethod def work(self): pass and @abstractmethod def rest(self): pass. Class Programmer(Worker) implements both. Create p = Programmer(), call p.work() and p.rest().",
+    code: 'from abc import ABC, abstractmethod\n' + sk('class') + ' Worker(ABC):\n  @abstractmethod\n  ' + sk('def') + ' work(self): pass\n  @abstractmethod\n  ' + sk('def') + ' rest(self): pass\n' + sk('class') + ' Programmer(Worker):\n  ' + sk('def') + ' work(self): return ' + ss('"coding"') + '\n  ' + sk('def') + ' rest(self): return ' + ss('"coffee"') + '\np = Programmer()\n' + sf('print') + '(p.work(), p.rest())  ' + sc('# coding coffee'),
+    guidance: ["All abstract methods must be implemented before the subclass can be instantiated."] },
+  { id: 65, title: "Abstract Property", topic: "abstraction", difficulty: "medium",
+    desc: "Class Base(ABC) has @abstractmethod def value(self): pass. Subclass Concrete(Base) has def value(self): return 42. Create c = Concrete(); print c.value().",
+    code: 'from abc import ABC, abstractmethod\n' + sk('class') + ' Base(ABC):\n  @abstractmethod\n  ' + sk('def') + ' value(self): pass\n' + sk('class') + ' Concrete(Base):\n  ' + sk('def') + ' value(self): return 42\nc = Concrete()\n' + sf('print') + '(c.value())  ' + sc('# 42'),
+    guidance: ["Abstract method can be a getter; subclasses must implement value()."] },
+  { id: 66, title: "Concrete + Abstract in One Class", topic: "abstraction", difficulty: "medium",
+    desc: "Class Animal(ABC) has @abstractmethod speak(self): pass and concrete method name(self): return self.__class__.__name__. Dog(Animal) implements speak. Create d = Dog(); print d.name(), d.speak().",
+    code: 'from abc import ABC, abstractmethod\n' + sk('class') + ' Animal(ABC):\n  @abstractmethod\n  ' + sk('def') + ' speak(self): pass\n  ' + sk('def') + ' name(self): return self.__class__.__name__\n' + sk('class') + ' Dog(Animal):\n  ' + sk('def') + ' speak(self): return ' + ss('"woof"') + '\nd = Dog()\n' + sf('print') + '(d.name(), d.speak())  ' + sc('# Dog woof'),
+    guidance: ["Abstract class can have both abstract and concrete methods; name() is shared."] },
+  { id: 67, title: "Abstract Class as Type Hint", topic: "abstraction", difficulty: "hard",
+    desc: "Define def process(s: Shape): return s.area(). Shape is ABC. Call process(Rectangle(2,3)) and process(Circle(1)). Polymorphism: same function, different shapes.",
+    code: 'from abc import ABC, abstractmethod\n' + sk('class') + ' Shape(ABC):\n  @abstractmethod\n  ' + sk('def') + ' area(self): pass\n' + sk('class') + ' Rectangle(Shape):\n  ' + sk('def') + ' __init__(self,w,h): self.w,self.h = w,h\n  ' + sk('def') + ' area(self): return self.w*self.h\n' + sk('class') + ' Circle(Shape):\n  ' + sk('def') + ' __init__(self,r): self.r = r\n  ' + sk('def') + ' area(self): return 3.14*self.r*self.r\n' + sk('def') + ' process(s): return s.area()\n' + sf('print') + '(process(Rectangle(2,3)), process(Circle(1)))  ' + sc('# 6 3.14...'),
+    guidance: ["process(s) works for any Shape; abstraction defines the contract."] },
+  { id: 68, title: "Subclass Without Implementing", topic: "abstraction", difficulty: "medium",
+    desc: "Shape(ABC) has @abstractmethod area(self): pass. Class Incomplete(Shape): pass. Try Incomplete() — TypeError: must implement area.",
+    code: 'from abc import ABC, abstractmethod\n' + sk('class') + ' Shape(ABC):\n  @abstractmethod\n  ' + sk('def') + ' area(self): pass\n' + sk('class') + ' Incomplete(Shape): pass\n' + sc('# Incomplete()  TypeError'),
+    guidance: ["Subclass must implement all abstract methods; Incomplete() is still abstract."] },
+  { id: 69, title: "ABC with __init__", topic: "abstraction", difficulty: "hard",
+    desc: "Abstract class Vehicle(ABC) has __init__(self, name): self.name = name and @abstractmethod def start(self): pass. Car(Vehicle) calls super().__init__(name) and implements start(). Create c = Car('Tesla'); print c.name, c.start().",
+    code: 'from abc import ABC, abstractmethod\n' + sk('class') + ' Vehicle(ABC):\n  ' + sk('def') + ' __init__(self, name): self.name = name\n  @abstractmethod\n  ' + sk('def') + ' start(self): pass\n' + sk('class') + ' Car(Vehicle):\n  ' + sk('def') + ' start(self): return ' + ss('"running"') + '\nc = Car(' + ss('"Tesla"') + ')\n' + sf('print') + '(c.name, c.start())  ' + sc('# Tesla running'),
+    guidance: ["Abstract class can have __init__; Car(name) calls super().__init__(name) then sets name."] },
+  { id: 70, title: "Registering a Virtual Subclass", topic: "abstraction", difficulty: "hard",
+    desc: "Shape(ABC) with @abstractmethod area(self): pass. Class MyShape has def area(self): return 99. Register: Shape.register(MyShape). Now isinstance(MyShape(), Shape) is True. Create m = MyShape(); print m.area().",
+    code: 'from abc import ABC, abstractmethod\n' + sk('class') + ' Shape(ABC):\n  @abstractmethod\n  ' + sk('def') + ' area(self): pass\n' + sk('class') + ' MyShape:\n  ' + sk('def') + ' area(self): return 99\nShape.register(MyShape)\nm = MyShape()\n' + sf('print') + '(m.area(), ' + sf('isinstance') + '(m, Shape))  ' + sc('# 99 True'),
+    guidance: ["register() makes MyShape a virtual subclass of Shape without inheriting; isinstance still works."] }
 ];
 
 /* ─────────────────────────────────────────────
@@ -614,26 +1234,28 @@ var STORAGE_KEY = 'python-workout-solved';
 function loadSolvedFromStorage() {
   try {
     var raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { ch1: [], ch2: [], ch3: [] };
+    if (!raw) return { ch1: [], ch2: [], ch3: [], ch4: [] };
     var data = JSON.parse(raw);
     return {
       ch1: Array.isArray(data.ch1) ? data.ch1 : [],
       ch2: Array.isArray(data.ch2) ? data.ch2 : [],
-      ch3: Array.isArray(data.ch3) ? data.ch3 : []
+      ch3: Array.isArray(data.ch3) ? data.ch3 : [],
+      ch4: Array.isArray(data.ch4) ? data.ch4 : []
     };
-  } catch (e) { return { ch1: [], ch2: [], ch3: [] }; }
+  } catch (e) { return { ch1: [], ch2: [], ch3: [], ch4: [] }; }
 }
 function saveSolvedToStorage() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
       ch1: Array.from(solvedIds.ch1),
       ch2: Array.from(solvedIds.ch2),
-      ch3: Array.from(solvedIds.ch3)
+      ch3: Array.from(solvedIds.ch3),
+      ch4: Array.from(solvedIds.ch4)
     }));
   } catch (e) {}
 }
 var saved = loadSolvedFromStorage();
-var solvedIds = { ch1: new Set(saved.ch1), ch2: new Set(saved.ch2), ch3: new Set(saved.ch3) };
+var solvedIds = { ch1: new Set(saved.ch1), ch2: new Set(saved.ch2), ch3: new Set(saved.ch3), ch4: new Set(saved.ch4) };
 
 /* ─────────────────────────────────────────────
    RENDER
@@ -691,7 +1313,7 @@ function runPythonCode(code) {
 }
 
 function getProblemById(chKey, id) {
-  var arr = chKey === 'ch1' ? ch1 : chKey === 'ch2' ? ch2 : ch3;
+  var arr = chKey === 'ch1' ? ch1 : chKey === 'ch2' ? ch2 : chKey === 'ch3' ? ch3 : ch4;
   for (var i = 0; i < arr.length; i++) if (arr[i].id === id) return arr[i];
   return null;
 }
@@ -804,13 +1426,17 @@ function submitCodeInModal() {
 document.getElementById('ch1-grid').innerHTML = ch1.map(function (p, i) { return renderCard(p, 1, i * 0.04); }).join('');
 document.getElementById('ch2-grid').innerHTML = ch2.map(function (p, i) { return renderCard(p, 2, i * 0.04); }).join('');
 document.getElementById('ch3-grid').innerHTML = ch3.map(function (p, i) { return renderCard(p, 3, i * 0.04); }).join('');
+var ch4Grid = document.getElementById('ch4-grid');
+if (ch4Grid) ch4Grid.innerHTML = ch4.map(function (p, i) { return renderCard(p, 4, i * 0.04); }).join('');
 
 document.getElementById('ch1-count').textContent = ch1.length;
 document.getElementById('ch2-count').textContent = ch2.length;
 document.getElementById('ch3-count').textContent = ch3.length;
+var ch4Count = document.getElementById('ch4-count');
+if (ch4Count) ch4Count.textContent = ch4.length;
 
 function restoreSolvedUI() {
-  ['ch1', 'ch2', 'ch3'].forEach(function (chKey) {
+  ['ch1', 'ch2', 'ch3', 'ch4'].forEach(function (chKey) {
     var gridId = chKey + '-grid';
     solvedIds[chKey].forEach(function (id) {
       var card = document.querySelector('#' + gridId + ' .card[data-id="' + id + '"]');
@@ -859,11 +1485,27 @@ function updateChapter3Lock() {
     ch3Tab.title = 'Complete all ' + ch2.length + ' Chapter 2 problems to unlock';
   }
 }
+function updateChapter4Lock() {
+  var ch4Tab = document.querySelector('.ch-tab[data-chapter="4"]');
+  if (!ch4Tab) return;
+  var ch3Complete = ch3.filter(function (p) { return solvedIds.ch3.has(p.id); }).length >= ch3.length;
+  if (ch3Complete) {
+    ch4Tab.classList.remove('ch-tab-locked');
+    ch4Tab.classList.add('ch-tab-unlocked');
+    ch4Tab.setAttribute('aria-disabled', 'false');
+    ch4Tab.title = 'OOPs';
+  } else {
+    ch4Tab.classList.add('ch-tab-locked');
+    ch4Tab.classList.remove('ch-tab-unlocked');
+    ch4Tab.setAttribute('aria-disabled', 'true');
+    ch4Tab.title = 'Complete all ' + ch3.length + ' Chapter 3 problems to unlock';
+  }
+}
 
 document.querySelectorAll('.ch-tab').forEach(function (btn) {
   btn.addEventListener('click', function () {
     var ch = btn.dataset.chapter;
-    if ((ch === '2' || ch === '3') && btn.classList.contains('ch-tab-locked')) return;
+    if ((ch === '2' || ch === '3' || ch === '4') && btn.classList.contains('ch-tab-locked')) return;
     document.querySelectorAll('.ch-tab').forEach(function (b) { b.classList.remove('active'); });
     document.querySelectorAll('.ch-section').forEach(function (s) { s.classList.remove('active'); });
     btn.classList.add('active');
@@ -873,6 +1515,7 @@ document.querySelectorAll('.ch-tab').forEach(function (btn) {
 });
 updateChapter2Lock();
 updateChapter3Lock();
+updateChapter4Lock();
 
 /* ─────────────────────────────────────────────
    FILTERS
@@ -902,6 +1545,8 @@ function setupFilter(barId, gridId) {
 setupFilter('ch1-filter-bar', 'ch1-grid');
 setupFilter('ch2-filter-bar', 'ch2-grid');
 setupFilter('ch3-filter-bar', 'ch3-grid');
+var ch4FilterBar = document.getElementById('ch4-filter-bar');
+if (ch4FilterBar) setupFilter('ch4-filter-bar', 'ch4-grid');
 
 /* ─────────────────────────────────────────────
    GUIDANCE TOGGLE
@@ -938,14 +1583,20 @@ function updateProgress() {
   var d1 = ch1.filter(function (p) { return solvedIds.ch1.has(p.id); }).length, t1 = ch1.length;
   var d2 = ch2.filter(function (p) { return solvedIds.ch2.has(p.id); }).length, t2 = ch2.length;
   var d3 = ch3.filter(function (p) { return solvedIds.ch3.has(p.id); }).length, t3 = ch3.length;
+  var d4 = ch4.filter(function (p) { return solvedIds.ch4.has(p.id); }).length, t4 = ch4.length;
   document.getElementById('ch1-prog-text').textContent = d1 + ' / ' + t1 + ' solved';
   document.getElementById('ch1-prog-fill').style.width = (t1 ? Math.min(1, d1 / t1) * 100 : 0) + '%';
   document.getElementById('ch2-prog-text').textContent = d2 + ' / ' + t2 + ' solved';
   document.getElementById('ch2-prog-fill').style.width = (t2 ? Math.min(1, d2 / t2) * 100 : 0) + '%';
   document.getElementById('ch3-prog-text').textContent = d3 + ' / ' + t3 + ' solved';
   document.getElementById('ch3-prog-fill').style.width = (t3 ? Math.min(1, d3 / t3) * 100 : 0) + '%';
-  document.getElementById('total-count').textContent = d1 + d2 + d3;
+  var ch4ProgText = document.getElementById('ch4-prog-text');
+  var ch4ProgFill = document.getElementById('ch4-prog-fill');
+  if (ch4ProgText) ch4ProgText.textContent = d4 + ' / ' + t4 + ' solved';
+  if (ch4ProgFill) ch4ProgFill.style.width = (t4 ? Math.min(1, d4 / t4) * 100 : 0) + '%';
+  document.getElementById('total-count').textContent = d1 + d2 + d3 + d4;
   updateChapter2Lock();
   updateChapter3Lock();
+  updateChapter4Lock();
 }
 updateProgress();
