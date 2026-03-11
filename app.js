@@ -1227,6 +1227,69 @@ var ch4 = [
     guidance: ["register() makes MyShape a virtual subclass of Shape without inheriting; isinstance still works."] }
 ];
 
+var ch5 = [
+  { id: 1, title: "Library Management System", topic: "machine_test", difficulty: "medium",
+    desc: "Create a Library class with a list of books. Implement display_books(), lend_book(book_name, borrower), and return_book(book_name). Track which books are currently lent out and handle the case when a book is already lent.",
+    guidance: ["Use a list for available books and a dict (book -> borrower) for lent books.", "In lend_book check if the book is in the list and not already lent; then move it to lent tracking.", "In return_book remove from lent and add back to available list."],
+    solution: "class Library:\n  def __init__(self):\n    self.books = []\n    self.lent = {}  # book_name -> borrower\n  def display_books(self):\n    for b in self.books:\n      status = ' (lent to ' + self.lent.get(b, '') + ')' if b in self.lent else ''\n      print(b + status)\n  def lend_book(self, book_name, borrower):\n    if book_name not in self.books:\n      print('Book not in library')\n      return\n    if book_name in self.lent:\n      print('Currently lent out')\n      return\n    self.lent[book_name] = borrower\n  def return_book(self, book_name):\n    if book_name in self.lent:\n      del self.lent[book_name]\n\nlib = Library()\nlib.books = ['Python', 'Java']\nlib.lend_book('Python', 'Alice')\nlib.lend_book('Python', 'Bob')\nlib.return_book('Python')\nlib.display_books()",
+    solutionMethod: "Encapsulate book list and a lent dict. display_books shows each book and optionally '(lent to X)'. lend_book validates presence and not already lent; return_book removes from lent." },
+  { id: 2, title: "Employee Payroll with Inheritance", topic: "machine_test", difficulty: "medium",
+    desc: "Create a base class Employee with name. Subclasses: SalariedEmployee(salary per month) and HourlyEmployee(hourly_rate, hours_worked). Each has calculate_pay() returning the appropriate amount. Create one of each and print their pay.",
+    guidance: ["Base Employee can have __init__(self, name).", "SalariedEmployee.__init__(self, name, salary); calculate_pay returns salary.", "HourlyEmployee.__init__(self, name, hourly_rate, hours_worked); calculate_pay returns hourly_rate * hours_worked."],
+    solution: "class Employee:\n  def __init__(self, name):\n    self.name = name\nclass SalariedEmployee(Employee):\n  def __init__(self, name, salary):\n    super().__init__(name)\n    self.salary = salary\n  def calculate_pay(self):\n    return self.salary\nclass HourlyEmployee(Employee):\n  def __init__(self, name, hourly_rate, hours_worked):\n    super().__init__(name)\n    self.hourly_rate = hourly_rate\n    self.hours_worked = hours_worked\n  def calculate_pay(self):\n    return self.hourly_rate * self.hours_worked\n\ns = SalariedEmployee('Alice', 5000)\nh = HourlyEmployee('Bob', 20, 40)\nprint(s.calculate_pay(), h.calculate_pay())",
+    solutionMethod: "Inherit from Employee; call super().__init__(name) in subclasses. Override calculate_pay() in each subclass with the correct formula." },
+  { id: 3, title: "Banking System", topic: "machine_test", difficulty: "medium",
+    desc: "BankAccount with account_holder and private balance. Implement deposit(amount), withdraw(amount) (no overdraft), get_balance(). Keep a transaction_history list and log every deposit and withdrawal.",
+    guidance: ["Use a single leading underscore for 'private' balance, e.g. self._balance.", "Append a string or dict to transaction_history in deposit and withdraw.", "In withdraw, only deduct if amount <= self._balance."],
+    solution: "class BankAccount:\n  def __init__(self, account_holder):\n    self.account_holder = account_holder\n    self._balance = 0\n    self.transaction_history = []\n  def deposit(self, amount):\n    self._balance += amount\n    self.transaction_history.append('deposit ' + str(amount))\n  def withdraw(self, amount):\n    if amount > self._balance:\n      return\n    self._balance -= amount\n    self.transaction_history.append('withdraw ' + str(amount))\n  def get_balance(self):\n    return self._balance\n\nacc = BankAccount('Alice')\nacc.deposit(100)\nacc.withdraw(30)\nprint(acc.get_balance(), acc.transaction_history)",
+    solutionMethod: "Encapsulate _balance and transaction_history. Every deposit/withdraw updates balance and appends to history; withdraw checks balance first to prevent overdraft." },
+  { id: 4, title: "Shape Area Calculator", topic: "machine_test", difficulty: "medium",
+    desc: "Use the abc module. Abstract class Shape with abstract method area(). Implement Circle(radius) and Rectangle(width, height). You must not be able to instantiate Shape. Create a circle and a rectangle and print their areas.",
+    guidance: ["from abc import ABC, abstractmethod; class Shape(ABC): with @abstractmethod def area(self): pass.", "Circle and Rectangle inherit from Shape and implement area() (pi*r*r and width*height)."],
+    solution: "from abc import ABC, abstractmethod\nimport math\nclass Shape(ABC):\n  @abstractmethod\n  def area(self):\n    pass\nclass Circle(Shape):\n  def __init__(self, radius):\n    self.radius = radius\n  def area(self):\n    return math.pi * self.radius ** 2\nclass Rectangle(Shape):\n  def __init__(self, width, height):\n    self.width = width\n    self.height = height\n  def area(self):\n    return self.width * self.height\n\nc = Circle(2)\nr = Rectangle(3, 4)\nprint(c.area(), r.area())",
+    solutionMethod: "Shape(ABC) with @abstractmethod area(). Concrete classes Circle and Rectangle implement area() with the correct formulas. Instantiating Shape raises TypeError." },
+  { id: 5, title: "Magic Method Shopping Cart", topic: "machine_test", difficulty: "medium",
+    desc: "Item(name, price). ShoppingCart holds a list of Item. Implement __len__ (number of items) and __str__ (formatted receipt with each item and total at the end). Create a cart, add items, print(len(cart)) and print(cart).",
+    guidance: ["Item is a simple class with name and price.", "ShoppingCart has a list; __len__ returns len(self.items); __str__ builds a string with each 'name - price' and 'Total: ...'."],
+    solution: "class Item:\n  def __init__(self, name, price):\n    self.name = name\n    self.price = price\nclass ShoppingCart:\n  def __init__(self):\n    self.items = []\n  def add(self, item):\n    self.items.append(item)\n  def __len__(self):\n    return len(self.items)\n  def __str__(self):\n    lines = [i.name + ' - ' + str(i.price) for i in self.items]\n    total = sum(i.price for i in self.items)\n    lines.append('Total: ' + str(total))\n    return '\\n'.join(lines)\n\nc = ShoppingCart()\nc.add(Item('Apple', 2))\nc.add(Item('Bread', 3))\nprint(len(c))\nprint(c)",
+    solutionMethod: "Store items in a list. __len__ delegates to len(self.items). __str__ iterates items, formats name and price, then appends total and returns joined string." },
+  { id: 6, title: "Student Grade Tracker", topic: "machine_test", difficulty: "medium",
+    desc: "Class Student(name). Method add_grade(subject, score). Method get_average(subject) returning average for that subject, or overall average if subject is None. Method get_grades() returning a dict of subject -> list of scores.",
+    guidance: ["Use a dict mapping subject to list of scores: self._grades = {}.", "add_grade: append to self._grades.setdefault(subject, []).", "get_average(subject): if subject given, average that list; else average all scores."],
+    solution: "class Student:\n  def __init__(self, name):\n    self.name = name\n    self._grades = {}\n  def add_grade(self, subject, score):\n    self._grades.setdefault(subject, []).append(score)\n  def get_average(self, subject=None):\n    if subject is not None:\n      lst = self._grades.get(subject, [])\n    else:\n      lst = [s for subj in self._grades for s in self._grades[subj]]\n    return sum(lst) / len(lst) if lst else 0\n  def get_grades(self):\n    return dict(self._grades)\n\ns = Student('Ali')\ns.add_grade('Math', 90)\ns.add_grade('Math', 80)\ns.add_grade('Eng', 85)\nprint(s.get_average('Math'), s.get_average(), s.get_grades())",
+    solutionMethod: "Store grades as dict of subject -> list of scores. get_average filters by subject or flattens all; return sum/len with guard for empty list." },
+  { id: 7, title: "Vehicle Hierarchy", topic: "machine_test", difficulty: "medium",
+    desc: "Abstract Vehicle(ABC) with start() and stop() abstract. Car and Bike inherit and implement both. Each has a name. Create one Car and one Bike, call start() and stop() and print a short message from each.",
+    guidance: ["Vehicle has @abstractmethod start(self) and stop(self).", "Car and Bike __init__(self, name); start/stop can return or print a message."],
+    solution: "from abc import ABC, abstractmethod\nclass Vehicle(ABC):\n  @abstractmethod\n  def start(self): pass\n  @abstractmethod\n  def stop(self): pass\nclass Car(Vehicle):\n  def __init__(self, name):\n    self.name = name\n  def start(self):\n    return self.name + ' car started'\n  def stop(self):\n    return self.name + ' car stopped'\nclass Bike(Vehicle):\n  def __init__(self, name):\n    self.name = name\n  def start(self):\n    return self.name + ' bike started'\n  def stop(self):\n    return self.name + ' bike stopped'\n\nc = Car('Tesla')\nb = Bike('Hero')\nprint(c.start(), c.stop())\nprint(b.start(), b.stop())",
+    solutionMethod: "Abstract Vehicle with two abstract methods. Car and Bike implement both and use self.name in their messages." },
+  { id: 8, title: "Temperature Converter", topic: "machine_test", difficulty: "easy",
+    desc: "Class Temperature with a single value (Celsius). Methods to_celsius() (return as-is), to_fahrenheit() (return 9/5*val+32), to_kelvin() (return val+273.15). Use a property or method to get/set the value.",
+    guidance: ["Store the value in __init__; provide getter/setter or use a single attribute.", "Implement the three conversion methods using the stored value."],
+    solution: "class Temperature:\n  def __init__(self, celsius):\n    self._celsius = celsius\n  def to_celsius(self):\n    return self._celsius\n  def to_fahrenheit(self):\n    return 9/5 * self._celsius + 32\n  def to_kelvin(self):\n    return self._celsius + 273.15\n\nt = Temperature(25)\nprint(t.to_celsius(), t.to_fahrenheit(), t.to_kelvin())",
+    solutionMethod: "Store Celsius in _celsius. to_celsius returns it; to_fahrenheit and to_kelvin use the standard formulas." },
+  { id: 9, title: "Stack Class", topic: "machine_test", difficulty: "medium",
+    desc: "Class Stack with push(item), pop() (return and remove top; return None if empty), peek() (return top without removing), and is_empty(). Use a list to store elements.",
+    guidance: ["Use self._items = []. push appends; pop pops if non-empty else None; peek returns last element; is_empty returns len == 0."],
+    solution: "class Stack:\n  def __init__(self):\n    self._items = []\n  def push(self, item):\n    self._items.append(item)\n  def pop(self):\n    return self._items.pop() if self._items else None\n  def peek(self):\n    return self._items[-1] if self._items else None\n  def is_empty(self):\n    return len(self._items) == 0\n\ns = Stack()\ns.push(1)\ns.push(2)\nprint(s.pop(), s.peek(), s.is_empty(), s.pop(), s.pop())",
+    solutionMethod: "List as underlying storage. push appends; pop uses list.pop() with guard for empty; peek returns last element; is_empty checks length." },
+  { id: 10, title: "Comparable Person", topic: "machine_test", difficulty: "medium",
+    desc: "Person(name, age). Implement __lt__(self, other) so that Person instances are compared by age. Create a list of Person objects, sort it, and print their names in order.",
+    guidance: ["__lt__(self, other) should return self.age < other.age (and optionally check type).", "sorted(list_of_persons) will use __lt__."],
+    solution: "class Person:\n  def __init__(self, name, age):\n    self.name = name\n    self.age = age\n  def __lt__(self, other):\n    if not isinstance(other, Person):\n      return NotImplemented\n    return self.age < other.age\n\npeople = [Person('Bob', 30), Person('Alice', 25), Person('Charlie', 28)]\nfor p in sorted(people):\n  print(p.name)",
+    solutionMethod: "Implement __lt__ to compare self.age with other.age; return NotImplemented for non-Person to support proper comparison behavior. sorted() uses __lt__." },
+  { id: 11, title: "Singleton Logger (Advanced)", topic: "machine_test", difficulty: "hard",
+    desc: "Implement a Logger class such that only one instance ever exists. Use a class-level variable _instance = None. Provide a class method get_instance() that returns the single instance (creating it on first call). Instance method log(msg) appends the message to a list _logs. Method get_logs() returns the list. Create the logger via Logger.get_instance(), log two messages, and print get_logs().",
+    guidance: ["Step 1: Define class Logger with _instance = None (class variable, outside __init__).", "Step 2: In __init__, append self to Logger._instance or set Logger._instance = self so only one instance is stored.", "Step 3: @classmethod get_instance(cls): if cls._instance is None: cls._instance = cls(); return cls._instance.", "Step 4: In __init__, set self._logs = []. In log(self, msg), do self._logs.append(msg). get_logs() returns self._logs."],
+    solution: "class Logger:\n  _instance = None\n  def __init__(self):\n    self._logs = []\n    Logger._instance = self\n  @classmethod\n  def get_instance(cls):\n    if cls._instance is None:\n      cls._instance = cls()\n    return cls._instance\n  def log(self, msg):\n    self._logs.append(msg)\n  def get_logs(self):\n    return self._logs\n\nlogger = Logger.get_instance()\nlogger.log('First')\nlogger.log('Second')\nprint(logger.get_logs())",
+    solutionMethod: "Class variable _instance holds the single instance. get_instance() creates Logger() only when _instance is None and assigns it to _instance. All calls to get_instance() then return the same object. _logs is an instance list; log() appends, get_logs() returns it." },
+  { id: 12, title: "Context Manager Timer (Advanced)", topic: "machine_test", difficulty: "hard",
+    desc: "Implement a Timer class that works as a context manager. Use 'with Timer() as t:' so that when the block exits, the elapsed time in seconds is printed. Use time.time() for the current timestamp. __enter__(self) should record the start time and return self; __exit__(self, exc_type, exc_val, exc_tb) should compute elapsed = end - start and print it (e.g. 'Elapsed: 0.5s').",
+    guidance: ["Step 1: import time at the top of your script.", "Step 2: In __enter__(self), store self.start = time.time() then return self (so 'as t' gives the timer object).", "Step 3: In __exit__(self, exc_type, exc_val, exc_tb), set self.end = time.time(), then elapsed = self.end - self.start, then print('Elapsed: ...s'). Return None or False (do not suppress exceptions).", "Step 4: Test with 'with Timer() as t: time.sleep(0.1)' and confirm the printed time is about 0.1."],
+    solution: "import time\nclass Timer:\n  def __enter__(self):\n    self.start = time.time()\n    return self\n  def __exit__(self, exc_type, exc_val, exc_tb):\n    self.end = time.time()\n    elapsed = self.end - self.start\n    print('Elapsed: ' + str(round(elapsed, 2)) + 's')\n    return False\n\nwith Timer() as t:\n  time.sleep(0.1)\nprint('Done')",
+    solutionMethod: "Context managers implement __enter__ and __exit__. __enter__ runs when entering the 'with' block; store start time and return self. __exit__ runs when leaving the block (normally or by exception); compute elapsed = end - start and print it. Returning False from __exit__ means exceptions are not suppressed." }
+];
+
 /* ─────────────────────────────────────────────
    PERSISTENCE
 ───────────────────────────────────────────── */
@@ -1234,15 +1297,16 @@ var STORAGE_KEY = 'python-workout-solved';
 function loadSolvedFromStorage() {
   try {
     var raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { ch1: [], ch2: [], ch3: [], ch4: [] };
+    if (!raw) return { ch1: [], ch2: [], ch3: [], ch4: [], ch5: [] };
     var data = JSON.parse(raw);
     return {
       ch1: Array.isArray(data.ch1) ? data.ch1 : [],
       ch2: Array.isArray(data.ch2) ? data.ch2 : [],
       ch3: Array.isArray(data.ch3) ? data.ch3 : [],
-      ch4: Array.isArray(data.ch4) ? data.ch4 : []
+      ch4: Array.isArray(data.ch4) ? data.ch4 : [],
+      ch5: Array.isArray(data.ch5) ? data.ch5 : []
     };
-  } catch (e) { return { ch1: [], ch2: [], ch3: [], ch4: [] }; }
+  } catch (e) { return { ch1: [], ch2: [], ch3: [], ch4: [], ch5: [] }; }
 }
 function saveSolvedToStorage() {
   try {
@@ -1250,12 +1314,13 @@ function saveSolvedToStorage() {
       ch1: Array.from(solvedIds.ch1),
       ch2: Array.from(solvedIds.ch2),
       ch3: Array.from(solvedIds.ch3),
-      ch4: Array.from(solvedIds.ch4)
+      ch4: Array.from(solvedIds.ch4),
+      ch5: Array.from(solvedIds.ch5)
     }));
   } catch (e) {}
 }
 var saved = loadSolvedFromStorage();
-var solvedIds = { ch1: new Set(saved.ch1), ch2: new Set(saved.ch2), ch3: new Set(saved.ch3), ch4: new Set(saved.ch4) };
+var solvedIds = { ch1: new Set(saved.ch1), ch2: new Set(saved.ch2), ch3: new Set(saved.ch3), ch4: new Set(saved.ch4), ch5: new Set(saved.ch5) };
 
 /* ─────────────────────────────────────────────
    RENDER
@@ -1267,27 +1332,48 @@ function dots(level) {
   }).join('');
 }
 
+function isCh5Complete() {
+  return typeof ch5 !== 'undefined' && solvedIds.ch5 && solvedIds.ch5.size >= ch5.length;
+}
+
 function renderCard(p, chapter, delay) {
   var chKey = 'ch' + chapter;
-  return '<div class="card" data-id="' + p.id + '" data-topic="' + p.topic + '" style="animation-delay:' + delay + 's">' +
+  var isCh5 = chapter === 5;
+  var body = '<p class="problem-desc">' + p.desc + '</p>';
+  if (!isCh5 && p.code) body += '<div class="code-block">' + p.code + '</div>';
+  body += '<button type="button" class="write-code-btn" onclick="openCodeModal(this)" data-id="' + p.id + '" data-ch="' + chapter + '">✏️ Write code</button>' +
+    '<button class="guidance-toggle" onclick="toggleG(this)">' +
+      '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg> 💡 Show Guidance' +
+    '</button>' +
+    '<div class="guidance-panel"><ol>' + p.guidance.map(function (g) { return '<li>' + g + '</li>'; }).join('') + '</ol></div>';
+  if (isCh5 && isCh5Complete() && p.solution != null) {
+    var codeHtml = '<pre class="code-block"><code>' + escapeHtml(p.solution) + '</code></pre>';
+    body += '<div class="solution-block"><div class="solution-label">Solution</div>' + codeHtml + (p.solutionMethod ? '<div class="method-text"><strong>Method:</strong> ' + escapeHtml(p.solutionMethod) + '</div>' : '') + '</div>';
+  }
+  var isSolved = isCh5 && solvedIds.ch5 && solvedIds.ch5.has(p.id);
+  var cardClass = 'card' + (isSolved ? ' solved' : '');
+  var btnHtml = isSolved ? '<span>🎉</span> Solved!' : '<span>✓</span> Mark as Solved';
+  var btnClass = 'done-btn' + (isSolved ? ' solved' : '');
+  return '<div class="' + cardClass + '" data-id="' + p.id + '" data-topic="' + p.topic + '" style="animation-delay:' + delay + 's">' +
     '<div class="card-header">' +
       '<span class="problem-num">#' + String(p.id).padStart(2, '0') + '</span>' +
       '<span class="problem-title">' + p.title + '</span>' +
       '<span class="topic-tag tag-' + p.topic + '">' + p.topic + '</span>' +
     '</div>' +
-    '<div class="card-body">' +
-      '<p class="problem-desc">' + p.desc + '</p>' +
-      '<div class="code-block">' + p.code + '</div>' +
-      '<button type="button" class="write-code-btn" onclick="openCodeModal(this)" data-id="' + p.id + '" data-ch="' + chapter + '">✏️ Write code</button>' +
-      '<button class="guidance-toggle" onclick="toggleG(this)">' +
-        '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg> 💡 Show Guidance' +
-      '</button>' +
-      '<div class="guidance-panel"><ol>' + p.guidance.map(function (g) { return '<li>' + g + '</li>'; }).join('') + '</ol></div>' +
-    '</div>' +
+    '<div class="card-body">' + body + '</div>' +
     '<div class="card-footer">' +
       '<div class="difficulty">' + dots(p.difficulty) + '</div>' +
-      '<button class="done-btn" onclick="toggleSolved(this,' + p.id + ',\'' + chKey + '\')"><span>✓</span> Mark as Solved</button>' +
+      '<button class="' + btnClass + '" onclick="toggleSolved(this,' + p.id + ',\'' + chKey + '\')">' + btnHtml + '</button>' +
     '</div></div>';
+}
+
+function escapeHtml(s) {
+  if (!s) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
 /* ─────────────────────────────────────────────
@@ -1313,7 +1399,7 @@ function runPythonCode(code) {
 }
 
 function getProblemById(chKey, id) {
-  var arr = chKey === 'ch1' ? ch1 : chKey === 'ch2' ? ch2 : chKey === 'ch3' ? ch3 : ch4;
+  var arr = chKey === 'ch1' ? ch1 : chKey === 'ch2' ? ch2 : chKey === 'ch3' ? ch3 : chKey === 'ch5' ? ch5 : ch4;
   for (var i = 0; i < arr.length; i++) if (arr[i].id === id) return arr[i];
   return null;
 }
@@ -1428,6 +1514,11 @@ document.getElementById('ch2-grid').innerHTML = ch2.map(function (p, i) { return
 document.getElementById('ch3-grid').innerHTML = ch3.map(function (p, i) { return renderCard(p, 3, i * 0.04); }).join('');
 var ch4Grid = document.getElementById('ch4-grid');
 if (ch4Grid) ch4Grid.innerHTML = ch4.map(function (p, i) { return renderCard(p, 4, i * 0.04); }).join('');
+function renderCh5Grid() {
+  var el = document.getElementById('ch5-grid');
+  if (el && typeof ch5 !== 'undefined') el.innerHTML = ch5.map(function (p, i) { return renderCard(p, 5, i * 0.04); }).join('');
+}
+renderCh5Grid();
 
 document.getElementById('ch1-count').textContent = ch1.length;
 document.getElementById('ch2-count').textContent = ch2.length;
@@ -1436,7 +1527,7 @@ var ch4Count = document.getElementById('ch4-count');
 if (ch4Count) ch4Count.textContent = ch4.length;
 
 function restoreSolvedUI() {
-  ['ch1', 'ch2', 'ch3', 'ch4'].forEach(function (chKey) {
+  ['ch1', 'ch2', 'ch3', 'ch4', 'ch5'].forEach(function (chKey) {
     var gridId = chKey + '-grid';
     solvedIds[chKey].forEach(function (id) {
       var card = document.querySelector('#' + gridId + ' .card[data-id="' + id + '"]');
@@ -1501,21 +1592,43 @@ function updateChapter4Lock() {
     ch4Tab.title = 'Complete all ' + ch3.length + ' Chapter 3 problems to unlock';
   }
 }
+function updateChapter5Lock() {
+  var ch5Tab = document.querySelector('.ch-tab[data-chapter="5"]');
+  if (!ch5Tab) return;
+  var ch4Complete = ch4.filter(function (p) { return solvedIds.ch4.has(p.id); }).length >= ch4.length;
+  if (ch4Complete) {
+    ch5Tab.classList.remove('ch-tab-locked');
+    ch5Tab.classList.add('ch-tab-unlocked');
+    ch5Tab.setAttribute('aria-disabled', 'false');
+    ch5Tab.title = 'OOPs Machine Test';
+  } else {
+    ch5Tab.classList.add('ch-tab-locked');
+    ch5Tab.classList.remove('ch-tab-unlocked');
+    ch5Tab.setAttribute('aria-disabled', 'true');
+    ch5Tab.title = 'Complete all ' + ch4.length + ' Chapter 4 problems to unlock';
+  }
+}
 
 document.querySelectorAll('.ch-tab').forEach(function (btn) {
   btn.addEventListener('click', function () {
     var ch = btn.dataset.chapter;
-    if ((ch === '2' || ch === '3' || ch === '4') && btn.classList.contains('ch-tab-locked')) return;
+    if ((ch === '2' || ch === '3' || ch === '4' || ch === '5') && btn.classList.contains('ch-tab-locked')) return;
     document.querySelectorAll('.ch-tab').forEach(function (b) { b.classList.remove('active'); });
     document.querySelectorAll('.ch-section').forEach(function (s) { s.classList.remove('active'); });
     btn.classList.add('active');
-    document.getElementById('chapter-' + ch).classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    var section = document.getElementById('chapter-' + ch);
+    if (section) {
+      section.classList.add('active');
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   });
 });
 updateChapter2Lock();
 updateChapter3Lock();
 updateChapter4Lock();
+updateChapter5Lock();
 
 /* ─────────────────────────────────────────────
    FILTERS
@@ -1584,6 +1697,8 @@ function updateProgress() {
   var d2 = ch2.filter(function (p) { return solvedIds.ch2.has(p.id); }).length, t2 = ch2.length;
   var d3 = ch3.filter(function (p) { return solvedIds.ch3.has(p.id); }).length, t3 = ch3.length;
   var d4 = ch4.filter(function (p) { return solvedIds.ch4.has(p.id); }).length, t4 = ch4.length;
+  var d5 = typeof ch5 !== 'undefined' ? ch5.filter(function (p) { return solvedIds.ch5.has(p.id); }).length : 0;
+  var t5 = typeof ch5 !== 'undefined' ? ch5.length : 0;
   document.getElementById('ch1-prog-text').textContent = d1 + ' / ' + t1 + ' solved';
   document.getElementById('ch1-prog-fill').style.width = (t1 ? Math.min(1, d1 / t1) * 100 : 0) + '%';
   document.getElementById('ch2-prog-text').textContent = d2 + ' / ' + t2 + ' solved';
@@ -1594,9 +1709,15 @@ function updateProgress() {
   var ch4ProgFill = document.getElementById('ch4-prog-fill');
   if (ch4ProgText) ch4ProgText.textContent = d4 + ' / ' + t4 + ' solved';
   if (ch4ProgFill) ch4ProgFill.style.width = (t4 ? Math.min(1, d4 / t4) * 100 : 0) + '%';
-  document.getElementById('total-count').textContent = d1 + d2 + d3 + d4;
+  var ch5ProgText = document.getElementById('ch5-prog-text');
+  var ch5ProgFill = document.getElementById('ch5-prog-fill');
+  if (ch5ProgText) ch5ProgText.textContent = d5 + ' / ' + t5 + ' solved';
+  if (ch5ProgFill) ch5ProgFill.style.width = (t5 ? Math.min(1, d5 / t5) * 100 : 0) + '%';
+  document.getElementById('total-count').textContent = d1 + d2 + d3 + d4 + d5;
   updateChapter2Lock();
   updateChapter3Lock();
   updateChapter4Lock();
+  updateChapter5Lock();
+  renderCh5Grid();
 }
 updateProgress();
