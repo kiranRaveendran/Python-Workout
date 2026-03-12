@@ -125,6 +125,39 @@
     .solution-block { margin-top: 12px; padding-top: 12px; border-top: 1px solid #2a2a45; }
     .solution-block .solution-label { font-size: 0.75rem; font-weight: 700; color: #2dd4bf; margin-bottom: 6px; }
     .solution-block .method-text { font-size: 0.85rem; color: #aab0c8; line-height: 1.6; margin-top: 8px; }
+    /* ── Concept Button ── */
+    .concept-btn { margin-left: auto; flex-shrink: 0; font-family: 'Outfit', sans-serif; font-size: 0.68rem; font-weight: 700; padding: 4px 10px; border-radius: 8px; border: 1px solid rgba(192,132,252,0.45); background: rgba(192,132,252,0.1); color: #c084fc; cursor: pointer; transition: all 0.18s; white-space: nowrap; letter-spacing: 0.3px; }
+    .concept-btn:hover { background: rgba(192,132,252,0.22); border-color: rgba(192,132,252,0.7); color: #d8a4ff; transform: translateY(-1px); }
+    /* ── Concept Modal ── */
+    .concept-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.72); z-index: 1100; display: none; align-items: flex-start; justify-content: center; padding: 24px 16px; overflow-y: auto; }
+    .concept-overlay.open { display: flex; }
+    .concept-box { background: #13132a; border: 1px solid #2a2a45; border-radius: 18px; width: 100%; max-width: 780px; box-shadow: 0 24px 80px rgba(0,0,0,0.6); display: flex; flex-direction: column; margin: auto; }
+    .concept-hdr { padding: 20px 24px 18px; background: linear-gradient(135deg, rgba(192,132,252,0.12) 0%, rgba(91,91,245,0.1) 100%); border-bottom: 1px solid #2a2a45; border-radius: 18px 18px 0 0; display: flex; align-items: flex-start; gap: 14px; }
+    .concept-hdr-text { flex: 1; min-width: 0; }
+    .concept-tagline-badge { font-size: 0.68rem; font-weight: 700; color: #c084fc; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .concept-hdr-title { font-size: 1.25rem; font-weight: 800; color: #e8e8f0; line-height: 1.25; }
+    .concept-hdr-subtitle { font-size: 0.82rem; color: #8b8ba8; margin-top: 4px; line-height: 1.5; }
+    .concept-close { background: none; border: 1px solid #2a2a45; border-radius: 8px; color: #6b6b88; cursor: pointer; padding: 4px 10px; font-size: 1.1rem; line-height: 1; transition: all 0.2s; flex-shrink: 0; }
+    .concept-close:hover { border-color: #5b5bf5; color: #e8e8f0; }
+    .concept-body { padding: 0; overflow-y: auto; max-height: 72vh; }
+    .concept-section { padding: 18px 24px; border-bottom: 1px solid #1e1e38; }
+    .concept-section:last-child { border-bottom: none; }
+    .concept-section-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 10px; }
+    .concept-sec-explain .concept-section-label { color: #5b5bf5; }
+    .concept-sec-world .concept-section-label { color: #22d3a5; }
+    .concept-sec-keywords .concept-section-label { color: #f5a623; }
+    .concept-sec-code .concept-section-label { color: #8b8bf8; }
+    .concept-sec-explain { background: rgba(91,91,245,0.04); }
+    .concept-sec-world { background: rgba(34,211,165,0.04); }
+    .concept-sec-keywords { background: rgba(245,166,35,0.04); }
+    .concept-sec-code { background: rgba(0,0,0,0.2); }
+    .concept-text { font-size: 0.9rem; color: #c0c0d8; line-height: 1.75; margin: 0; }
+    .concept-kw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 8px; }
+    .concept-kw-item { background: rgba(0,0,0,0.25); border: 1px solid #2a2a45; border-radius: 10px; padding: 10px 14px; }
+    .concept-kw-term { font-family: 'Space Mono', monospace; font-size: 0.75rem; font-weight: 700; color: #f5a623; margin-bottom: 4px; }
+    .concept-kw-meaning { font-size: 0.82rem; color: #aab0c8; line-height: 1.55; }
+    .concept-code-pre { background: rgba(0,0,0,0.4); border: 1px solid #2a2a45; border-radius: 10px; padding: 16px; font-family: 'Space Mono', monospace; font-size: 0.76rem; line-height: 1.75; color: #ccd6f6; overflow-x: auto; white-space: pre; margin: 0; }
+    @media (max-width: 600px) { .concept-kw-grid { grid-template-columns: 1fr; } .concept-hdr { padding: 16px 18px 14px; } .concept-section { padding: 14px 18px; } .concept-hdr-title { font-size: 1.05rem; } }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
     .card { animation: fadeUp 0.4s ease both; background: #1a1a2e; border: 1px solid #2a2a45; border-radius: 16px; overflow: hidden; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; }
     .card:hover { transform: translateY(-3px); border-color: rgba(91,91,245,0.4); box-shadow: 0 8px 40px rgba(91,91,245,0.12); }
@@ -369,6 +402,38 @@
     </div>
     <div class="problems-grid grid gap-5 max-w-[1300px] mx-auto px-4 sm:px-5 pb-20 relative z-10 w-full min-w-0" style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));" id="ch5-grid"></div>
   </section>
+
+  <!-- Concept Modal -->
+  <div id="concept-overlay" class="concept-overlay" onclick="if(event.target===this)closeConceptModal()">
+    <div class="concept-box" role="dialog" aria-modal="true" aria-labelledby="concept-modal-title">
+      <div class="concept-hdr">
+        <div class="concept-hdr-text">
+          <div class="concept-tagline-badge" id="concept-modal-tagline-badge"></div>
+          <div class="concept-hdr-title" id="concept-modal-title"></div>
+          <div class="concept-hdr-subtitle" id="concept-modal-tagline"></div>
+        </div>
+        <button class="concept-close" onclick="closeConceptModal()" aria-label="Close">&times;</button>
+      </div>
+      <div class="concept-body">
+        <div class="concept-section concept-sec-explain">
+          <div class="concept-section-label">📘 What is it?</div>
+          <p class="concept-text" id="concept-modal-explanation"></p>
+        </div>
+        <div class="concept-section concept-sec-world">
+          <div class="concept-section-label">🌍 Real World Analogy</div>
+          <p class="concept-text" id="concept-modal-realworld"></p>
+        </div>
+        <div class="concept-section concept-sec-keywords">
+          <div class="concept-section-label">🔑 Key Terms</div>
+          <div class="concept-kw-grid" id="concept-modal-keywords"></div>
+        </div>
+        <div class="concept-section concept-sec-code" id="concept-modal-code-section">
+          <div class="concept-section-label">💻 Code Example</div>
+          <pre class="concept-code-pre" id="concept-modal-code"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="code-modal-overlay" class="modal-overlay" aria-hidden="true" onclick="if(event.target===this) closeCodeModal()">
     <div class="modal-box" role="dialog" aria-labelledby="modal-title" aria-modal="true">
